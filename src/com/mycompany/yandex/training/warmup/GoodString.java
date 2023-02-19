@@ -35,63 +35,35 @@ public class GoodString {
         long maxGoodness = 0;
         while(true) {
             // 1 проход, берем отрезки с ненулевой суммой и длиной > 1
+            // внтури отрезка можем уменьшать сразу на минимум из всех эдементов отрезка
             boolean begin = false;
-            int currLen = 0;
             long prevGoodnes = maxGoodness;
             int beginInd = 0, endInd = 0;
             int minCnt = Integer.MAX_VALUE;
-
-            int targetSegmentBeginInd = 0;
-            int targetSegmentEndInd = 0;
-            int targetSegmentMinCnt = 0;
-            int maxByMinCnt = -1;
 
             for(int i = 0; i < n; i++) {
                 if (symbolsCnt[i] > 0) {
                     if (!begin && i < (n-1) && symbolsCnt[i+1] > 0) {
                         begin = true;
                         beginInd = i;
-                        currLen++;
                         minCnt = Math.min(minCnt, symbolsCnt[i]);
-                        // symbolsCnt[i]--;
                     } else {
                         if (begin) {
-                            currLen++;
                             minCnt = Math.min(minCnt, symbolsCnt[i]);
-                            // symbolsCnt[i]--;
                         }
                     }
                 } else {
                     if (begin) {
                         begin = false;
                         endInd = i - 1;
-                        //maxGoodness += goodnessDiff(symbolsCnt, beginInd, endInd, minCnt);
-                        if (minCnt > maxByMinCnt) {
-                            maxByMinCnt = minCnt;
-                            targetSegmentBeginInd = beginInd;
-                            targetSegmentEndInd = endInd;
-                            targetSegmentMinCnt = maxByMinCnt;
-                        }
-
-                        currLen = 0;
+                        maxGoodness += goodnessDiff(symbolsCnt, beginInd, endInd, minCnt);
                         minCnt = Integer.MAX_VALUE;
                     }
                 }
             }
             if (begin) {
                 endInd = n - 1;
-                //maxGoodness += goodnessDiff(symbolsCnt, beginInd, endInd, minCnt);
-                if (minCnt > maxByMinCnt) {
-                    maxByMinCnt = minCnt;
-                    targetSegmentBeginInd = beginInd;
-                    targetSegmentEndInd = endInd;
-                    targetSegmentMinCnt = maxByMinCnt;
-                }
-            }
-
-            if (maxByMinCnt > 0) {
-                maxGoodness += goodnessDiff(symbolsCnt, targetSegmentBeginInd, targetSegmentEndInd,
-                        targetSegmentMinCnt);
+                maxGoodness += goodnessDiff(symbolsCnt, beginInd, endInd, minCnt);
             }
 
             if (maxGoodness == prevGoodnes) {
