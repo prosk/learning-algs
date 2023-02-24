@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 // https://contest.yandex.ru/contest/45468/problems/2/
+// В видео разбора другое решение (через префиксные суммы+ бинарный поиск), можно добавить такое альтернативное решение сюда.
+// https://www.youtube.com/watch?v=O26-2-94BDk&t=159s
+// Но 2-мя указателями более эффективно
 public class BeautifulString {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);

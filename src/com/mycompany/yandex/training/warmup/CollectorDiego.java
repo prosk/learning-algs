@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.util.*;
 
 // https://contest.yandex.ru/contest/45468/problems/3/
+// В видео разбора другое решение (через бинарный поиск), можно добавить такое альтернативное решение сюда.
+// https://www.youtube.com/watch?v=O26-2-94BDk&t=159s
 public class CollectorDiego {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);

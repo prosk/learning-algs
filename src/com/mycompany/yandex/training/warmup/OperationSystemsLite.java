@@ -6,6 +6,11 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.*;
 
+
+// В разборе задач показано, как эту же задачу решить не в Lite-варианте, когда N может быть велико
+// за NlogN, с использованием, сбалансированного дерева, например, в Java можно взять TreeMap
+// надо попробовать применить этот альтернативный подход
+// см. https://www.youtube.com/watch?v=O26-2-94BDk&t=159s
 public class OperationSystemsLite {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
@@ -62,6 +67,9 @@ public class OperationSystemsLite {
         out.println(res);
     }
 
+    // Проверку пересечения отрезков можно упростить
+    // если есть 2 отрезка [a, b] и [c, d]  (a <= b, c <= d), то отрезки пересекаются, если
+    // (a <= d && c <= b)
     private boolean isIntersected(int[][] segments, int i, int j) {
         return (segments[j][0] >= segments[i][0] && segments[j][0] <= segments[i][1]) ||
                 (segments[i][0] >= segments[j][0] && segments[i][0] <= segments[j][1]);

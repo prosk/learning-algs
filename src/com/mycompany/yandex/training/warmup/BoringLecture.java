@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+// В разборе несколько другая идея на эту задачу
+// https://www.youtube.com/watch?v=O26-2-94BDk&t=159s
 public class BoringLecture {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
