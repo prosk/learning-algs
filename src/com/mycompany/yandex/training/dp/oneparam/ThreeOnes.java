@@ -1,21 +1,19 @@
-package com.mycompany.yandex.training.queues;
+package com.mycompany.yandex.training.dp.oneparam;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class DrunkardGame {
+public class ThreeOnes {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new DrunkardGame().run();
+        new ThreeOnes().run();
     }
 
     private void run() {
@@ -32,43 +30,31 @@ public class DrunkardGame {
     }
 
     private void solve() {
-        Deque<Integer> firstQueue = new ArrayDeque<>();
-        Deque<Integer> secondQueue = new ArrayDeque<>();
+        int inputNum = readInt();
 
-        for(int i = 0; i < 5; i++) {
-            firstQueue.addLast(readInt());
+        int dp[] = new int[36];
+
+        dp[0] = 0;
+        dp[1] = 2;
+        dp[2] = 4;
+        dp[3] = 7;
+        dp[4] = 13;
+
+        // dp[i] - число последовательностей 0 и 1 длины i,
+        // в которых никакие три единицы не стоят рядом.
+
+        // dp[i] = dp[i-1] (добавляем 0 слева) + (dp[i-1] - dp[i-4])
+        // (добавляем 1 слева ко всем, кроме тех, которые начинаются на 110)
+
+        if (inputNum <= 4) {
+            out.println(dp[inputNum]);
+        } else {
+            for(int i = 5; i <= inputNum; i++) {
+                dp[i] = dp[i-1]*2 - dp[i-4];
+            }
+            out.println(dp[inputNum]);
         }
 
-        for(int i = 0; i < 5; i++) {
-            secondQueue.addLast(readInt());
-        }
-
-        int moveCount = 1, topFirst, topSecond;
-        while(moveCount <= 1_000_000) {
-            topFirst = firstQueue.pollFirst();
-            topSecond = secondQueue.pollFirst();
-
-            if ((topFirst > topSecond && !(topFirst == 9 && topSecond == 0)) || (topFirst == 0 && topSecond == 9)) {
-                firstQueue.addLast(topFirst);
-                firstQueue.addLast(topSecond);
-            } else {
-                secondQueue.addLast(topFirst);
-                secondQueue.addLast(topSecond);
-            }
-
-            if(firstQueue.isEmpty()) {
-                out.println("second " + moveCount);
-                return;
-            }
-
-            if(secondQueue.isEmpty()) {
-                out.println("first " + moveCount);
-                return;
-            }
-
-            moveCount++;
-        }
-        out.println("botva");
     }
 
     private int readInt() {
@@ -94,4 +80,5 @@ public class DrunkardGame {
     }
 
 }
+
 
