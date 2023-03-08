@@ -47,7 +47,7 @@ public class LcsWithAnswer {
 
         for(int i = 1; i <= firstLen; i++) {
             for(int j = 1; j <= secondLen; j++) {
-                // в текущую клетку можно попасть только сверху либо слева
+                // переход по динамике
                 if (firstSeqNums[i] == secondSeqNums[j]) {
                     dp[i][j] = dp[i-1][j-1] + 1;
                 } else {
