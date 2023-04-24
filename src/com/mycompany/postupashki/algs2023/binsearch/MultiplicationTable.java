@@ -33,7 +33,6 @@ public class MultiplicationTable {
         long n = readLong();
         long k = readLong();
 
-
         long l = 1;
         long r = n*n;
         long ans = 0;
