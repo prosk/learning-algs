@@ -1,19 +1,26 @@
 package com.mycompany.tagirvaleev.concurrency;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class RightSingleton {
 
     public static void main(String[] args) throws InterruptedException {
-        for(int i = 0; i < 50; i++) {
-            Thread t1 = new Thread(() -> {
-                System.out.println(Thread.currentThread().getName() + " " + Singleton.getInstance().y);
-            });
-            Thread t2 = new Thread(() -> {
-                System.out.println(Thread.currentThread().getName() + " " + Singleton.getInstance().y);
-            });
-            t1.start();
-            t2.start();
-            t1.join();
-            t2.join();
+        for(int i = 0; i < 1; i++) {
+            Runnable r = () -> {
+                for(int j = 0; j < 10; j++) {
+                    System.out.println(Thread.currentThread().getName() + " x = "
+                            + Singleton.getInstance().x + " y = " + Singleton.getInstance().y);
+                }
+            };
+            List<Thread> threads = Stream.generate(() -> new Thread(r))
+                    .limit(100).peek(Thread::start)
+                    .collect(Collectors.toList());
+            for(Thread thread: threads) {
+                thread.join();
+            }
+            System.out.println("Iteration " + i + " is finished!");
         }
     }
 

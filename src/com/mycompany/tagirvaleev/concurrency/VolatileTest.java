@@ -3,10 +3,15 @@ package com.mycompany.tagirvaleev.concurrency;
 public class VolatileTest {
 
     public static void main(String[] args) throws InterruptedException {
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 100; i++) {
             Foo foo = new Foo();
             Thread t1 = new Thread(() -> {
                 foo.x = 1;
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 foo.y = 1;
             });
             Thread t2 = new Thread(() -> {
@@ -15,8 +20,9 @@ public class VolatileTest {
             });
             t1.start();
             t2.start();
-            t1.join();
+            // t1.join();
             t2.join();
+            t1.join();
         }
     }
 

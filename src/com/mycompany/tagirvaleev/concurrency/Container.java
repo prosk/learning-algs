@@ -5,13 +5,14 @@ import java.util.List;
 
 // https://www.youtube.com/watch?v=kma6T8OAQ-Q
 public class Container {
-    private static final List<String> list = new ArrayList<>();
+    private static final    List<String> list = new ArrayList<>();
 
     synchronized void addEntry(String s) {
         list.add(s);
     }
 
     public static void main(String[] args) throws InterruptedException {
+        // Container container = new Container();
         Runnable foo = () -> {
             Container container = new Container();
             for(int i = 0; i < 100_000; i++) {
@@ -19,7 +20,7 @@ public class Container {
             }
         };
         List<Thread> threads = new ArrayList<>();
-        for(int count = 50; count > 0; count--) {
+        for(int count = 10; count > 0; count--) {
             Thread thread = new Thread(foo);
             thread.start();
             threads.add(thread);

@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 // https://www.youtube.com/watch?v=kma6T8OAQ-Q
 public class BadCounter {
-    int x = 0; // плохо
+    /*volatile*/ int x = 0; // плохо
 
     public static void main(String[] args) throws InterruptedException {
         for(int i = 0; i < 10; i ++) {
