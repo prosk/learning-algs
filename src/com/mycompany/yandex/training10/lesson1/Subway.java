@@ -1,4 +1,4 @@
-package com.mycompany.postupashki.algs2023.binsearch;
+package com.mycompany.yandex.training10.lesson1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,22 +7,23 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-// https://codeforces.com/edu/course/2/lesson/6/5/practice/contest/285084/problem/B
-public class MultiplicationTable {
-
+public class Subway {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
 
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new MultiplicationTable().run();
+        new Subway().run();
     }
 
     private void run() {
         try {
+            long timeStart = System.currentTimeMillis();
             solve();
             out.close();
+            long timeEnd = System.currentTimeMillis();
+            System.err.println("Time(ms) = " + (timeEnd - timeStart));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -30,40 +31,30 @@ public class MultiplicationTable {
     }
 
     private void solve() {
-        long n = readLong();
-        long k = readLong();
+        int a = readInt();
+        int b = readInt();
+        int n = readInt();
+        int m = readInt();
 
-        long l = 1;
-        long r = n*n;
-        long ans = 0;
+        int min1 = n + (n-1)*a;
+        int max1 = min1 + 2*a;
 
-        while (l <= r) {
-            long mid = l + (r - l) / 2;
-            if (pairsCnt(mid, n) >= k) {
-                ans = mid;
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
+        int min2 = m + (m-1)*b;
+        int max2 = min2 + 2*b;
+
+        if (max1 < min2 || max2 < min1) {
+            out.println("-1");
+            return;
         }
-        out.println(ans);
+
+        int resMin = Math.max(min1, min2);
+        int resMax = Math.min(max1, max2);
+
+        out.println(resMin + " " + resMax);
     }
 
-    private long pairsCnt(long mult, long n) {
-        long res = 0;
-        long j = n;
-
-        for(long i = 1; i <= n; i++) {
-            while(j >= 1 && mult < i*j) {
-                j--;
-            }
-            res += j;
-        }
-        return res;
-    }
-
-    private long readLong() {
-        return Long.parseLong(readString());
+    private int readInt() {
+        return Integer.parseInt(readString());
     }
 
     private String readString() {
@@ -83,4 +74,5 @@ public class MultiplicationTable {
             throw new RuntimeException(e);
         }
     }
+
 }

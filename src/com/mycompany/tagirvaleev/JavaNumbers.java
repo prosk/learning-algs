@@ -14,6 +14,8 @@ public class JavaNumbers {
 
         System.out.println(a+b+c);
         System.out.println((a+b)+c);
+        System.out.println(a*2);
+        System.out.println(a+b);
 
         System.out.println(c+b+a);
         System.out.println((c+b)+a);

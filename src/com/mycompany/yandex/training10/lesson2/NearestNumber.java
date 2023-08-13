@@ -1,4 +1,4 @@
-package com.mycompany.postupashki.algs2023.binsearch;
+package com.mycompany.yandex.training10.lesson2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,22 +7,22 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-// https://codeforces.com/edu/course/2/lesson/6/5/practice/contest/285084/problem/B
-public class MultiplicationTable {
-
+public class NearestNumber {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
-
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new MultiplicationTable().run();
+        new NearestNumber().run();
     }
 
     private void run() {
         try {
+            long timeStart = System.currentTimeMillis();
             solve();
             out.close();
+            long timeEnd = System.currentTimeMillis();
+            System.err.println("Time(ms) = " + (timeEnd - timeStart));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -30,40 +30,31 @@ public class MultiplicationTable {
     }
 
     private void solve() {
-        long n = readLong();
-        long k = readLong();
+        int n = readInt();
+        int[] arr = readIntArray(n);
+        int target = readInt();
 
-        long l = 1;
-        long r = n*n;
-        long ans = 0;
-
-        while (l <= r) {
-            long mid = l + (r - l) / 2;
-            if (pairsCnt(mid, n) >= k) {
-                ans = mid;
-                r = mid - 1;
-            } else {
-                l = mid + 1;
+        int ans = arr[0];
+        int currDiff = Math.abs(target - arr[0]);
+        int newDiff;
+        for(int i = 1; i < arr.length; i++) {
+            newDiff = Math.abs(target - arr[i]);
+            if (newDiff < currDiff) {
+                currDiff = newDiff;
+                ans = arr[i];
             }
         }
         out.println(ans);
     }
 
-    private long pairsCnt(long mult, long n) {
-        long res = 0;
-        long j = n;
-
-        for(long i = 1; i <= n; i++) {
-            while(j >= 1 && mult < i*j) {
-                j--;
-            }
-            res += j;
-        }
-        return res;
+    private int[] readIntArray(int n) {
+        int[] a = new int[n];
+        for (int i = 0; i < n; ++i) a[i] = readInt();
+        return a;
     }
 
-    private long readLong() {
-        return Long.parseLong(readString());
+    private int readInt() {
+        return Integer.parseInt(readString());
     }
 
     private String readString() {
@@ -83,4 +74,5 @@ public class MultiplicationTable {
             throw new RuntimeException(e);
         }
     }
+
 }

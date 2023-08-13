@@ -1,4 +1,4 @@
-package com.mycompany.postupashki.algs2023.binsearch;
+package com.mycompany.yandex.training10.lesson1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,22 +7,23 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-// https://codeforces.com/edu/course/2/lesson/6/5/practice/contest/285084/problem/B
-public class MultiplicationTable {
-
+public class PrizonerOfTheIf {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
 
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new MultiplicationTable().run();
+        new PrizonerOfTheIf().run();
     }
 
     private void run() {
         try {
+            long timeStart = System.currentTimeMillis();
             solve();
             out.close();
+            long timeEnd = System.currentTimeMillis();
+            System.err.println("Time(ms) = " + (timeEnd - timeStart));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -30,40 +31,26 @@ public class MultiplicationTable {
     }
 
     private void solve() {
-        long n = readLong();
-        long k = readLong();
-
-        long l = 1;
-        long r = n*n;
-        long ans = 0;
-
-        while (l <= r) {
-            long mid = l + (r - l) / 2;
-            if (pairsCnt(mid, n) >= k) {
-                ans = mid;
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
-        }
-        out.println(ans);
+        int a = readInt();
+        int b = readInt();
+        int c = readInt();
+        int d = readInt();
+        int e = readInt();
+        // d * e - отверстие в стене
+        // a * b * c - размеры кирпича
+        boolean resCanThrow = isCanThrow(d, e, a, b) ||
+               isCanThrow(d, e, a, c) ||
+               isCanThrow(d, e, b, c);
+        out.println(resCanThrow ? "YES" : "NO");
     }
 
-    private long pairsCnt(long mult, long n) {
-        long res = 0;
-        long j = n;
-
-        for(long i = 1; i <= n; i++) {
-            while(j >= 1 && mult < i*j) {
-                j--;
-            }
-            res += j;
-        }
-        return res;
+    private boolean isCanThrow(int w1, int w2, int k1, int k2) {
+        return (k1 <= w1 && k2 <= w2) ||
+                (k2 <= w1 && k1 <= w2);
     }
 
-    private long readLong() {
-        return Long.parseLong(readString());
+    private int readInt() {
+        return Integer.parseInt(readString());
     }
 
     private String readString() {
@@ -83,4 +70,5 @@ public class MultiplicationTable {
             throw new RuntimeException(e);
         }
     }
+
 }
