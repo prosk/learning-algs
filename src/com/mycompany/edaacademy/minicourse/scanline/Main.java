@@ -27,19 +27,22 @@ public class Main {
         // define events
         // 0 - point value, 1 - type (0 - segment start, 1 - point, 2 - segment end)
         // 2 - point index
-        int[][] events = new int[segCnt*2 + pointCnt][3];
+        int[][] events = new int[segCnt*2 + pointCnt][];
         int j = 0;
 
         for(int i = 0; i < segCnt; i++) {
+            events[j] = new int[2];
             events[j][0] = readInt();
             events[j][1] = 0;
             j++;
+            events[j] = new int[2];
             events[j][0] = readInt();
             events[j][1] = 2;
             j++;
         }
 
         for(int i = 0; i < pointCnt; i++) {
+            events[j] = new int[3];
             events[j][0] = readInt();
             events[j][1] = 1;
             events[j][2] = i;
@@ -67,12 +70,11 @@ public class Main {
             }
         }
         // print results
-        StringBuilder sb = new StringBuilder("");
         for(int i = 0; i < pointCnt; i++) {
-            sb.append(pointSegCnts[i]);
-            if (i < pointCnt-1) sb.append(' ');
+            out.print(pointSegCnts[i]);
+            if (i < pointCnt-1) out.print(" ");
         }
-        out.println(sb);
+        out.println();
     }
 
     private int readInt() {
