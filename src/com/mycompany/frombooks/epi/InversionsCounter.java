@@ -9,14 +9,17 @@ public class InversionsCounter {
         List<Integer> test1 = Arrays.asList(5, 3, 2, 18, 34, 7);
         System.out.println("Number of inversions in " + Arrays.toString(test1.toArray()) + " is " +
                 countInversions(test1));
+        System.out.println("Array after counting: " + Arrays.toString(test1.toArray()));
 
         List<Integer> test2 = Arrays.asList(5, 20, 30, 180, 340, 700);
         System.out.println("Number of inversions in " + Arrays.toString(test2.toArray()) + " is " +
                 countInversions(test2));
+        System.out.println("Array after counting: " + Arrays.toString(test2.toArray()));
 
         List<Integer> test3 = Arrays.asList(30, 22, 15, 7, 3);
         System.out.println("Number of inversions in " + Arrays.toString(test3.toArray()) + " is " +
                 countInversions(test3));
+        System.out.println("Array after counting: " + Arrays.toString(test3.toArray()));
     }
 
     public static int countInversions(List<Integer> A) {
