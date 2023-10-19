@@ -38,7 +38,7 @@ public class InversionsCounter {
                 + mergeSortAndCountInversionsAcrossSubarrays(A, start, mid, end);
     }
 
-    // Merge two sorted sublists AsubList(start, mid) and A.subList(mid, end)
+    // Merge two sorted sublists A.subList(start, mid) and A.subList(mid, end)
     // into A.subList(start, end) and return the number of inversions across
     // A.subList(start, mid) and A.subList(mid, end).
     private static int mergeSortAndCountInversionsAcrossSubarrays(List<Integer> A,
