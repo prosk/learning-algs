@@ -7,6 +7,11 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class TreeMaxEdgesSet {
+    List<Integer>[] adj;
+    private boolean[] visited;
+    private int[] dp_with_root;
+    private int[] dp_without_root;
+
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
@@ -17,11 +22,8 @@ public class TreeMaxEdgesSet {
 
     private void run() {
         try {
-            long timeStart = System.currentTimeMillis();
             solve();
             out.close();
-            long timeEnd = System.currentTimeMillis();
-            System.err.println("Time(ms) = " + (timeEnd - timeStart));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -33,57 +35,46 @@ public class TreeMaxEdgesSet {
         int m = n - 1;
 
         // graph ds
-        List<List<Integer>> adj = new ArrayList<>();
+        adj = new List[n+1];
+
         for(int i = 0; i <= n; i++) {
-            adj.add(new ArrayList<>());
+            adj[i] = new ArrayList<>();
         }
         // getting edges (u, v) and filling adj
         for(int i = 1; i <= m; i++) {
             int u = readInt();
             int v = readInt();
-            adj.get(u).add(v);
-            adj.get(v).add(u);
+            adj[u].add(v);
+            adj[v].add(u);
         }
 
-        boolean[] visited = new boolean[n+1];
-        int[] dp_with_root = new int[n+1];
-        int[] dp_without_root = new int[n+1];
+        visited = new boolean[n+1];
+        dp_with_root = new int[n+1];
+        dp_without_root = new int[n+1];
 
-        dfs(1, adj, visited, dp_with_root, dp_without_root);
+        dfs(1);
         out.println(Math.max(dp_with_root[1], dp_without_root[1]));
     }
 
-    private void dfs(int v, List<List<Integer>> adj, boolean[] visited,
-                     int[] dp_with_root, int[] dp_without_root) {
+    private void dfs(int v) {
         visited[v] = true;
-        List<Integer> calculatedChildes = new ArrayList<>();
-        Map<Integer, Integer> optSums = new HashMap<>();
-        int maxDiff = Integer.MIN_VALUE, currDiff, uMaxDiff = -1;
-        for(int u: adj.get(v)) {
+        int maxDiff = Integer.MIN_VALUE, currDiff, uMaxDiff = -1, uOptSum = 0;
+        for(int u: adj[v]) {
             if (!visited[u]) {
-                dfs(u, adj, visited, dp_with_root, dp_without_root);
+                dfs(u);
                 int optSum = Math.max(dp_with_root[u], dp_without_root[u]);
                 dp_without_root[v] += optSum;
-                calculatedChildes.add(u);
-                optSums.put(u, optSum);
                 currDiff = dp_without_root[u] - optSum;
                 if (currDiff > maxDiff) {
                     maxDiff = currDiff;
                     uMaxDiff = u;
+                    uOptSum = optSum;
                 }
             }
         }
         if (uMaxDiff != -1) {
-            // calculation of dp_with_root[v]
-            dp_with_root[v] = 1 + dp_without_root[uMaxDiff] + (dp_without_root[v] - optSums.get(uMaxDiff));
+            dp_with_root[v] = 1 + dp_without_root[uMaxDiff] + (dp_without_root[v] - uOptSum);
         }
-
-        // calculation of dp_with_root[v]
-        /*for(int u: calculatedChildes) {
-            // select edge (v, u)
-            int sum = 1 + dp_without_root[u] + (dp_without_root[v] - optSums.get(u));
-            dp_with_root[v] = Math.max(dp_with_root[v], sum);
-        }*/
     }
 
     private int readInt() {
