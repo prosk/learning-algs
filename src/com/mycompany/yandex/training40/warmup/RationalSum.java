@@ -7,13 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class NotMinOnSegment {
+public class RationalSum {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new RationalSum().run();
     }
 
     private void run() {
@@ -30,29 +30,21 @@ public class NotMinOnSegment {
     }
 
     private void solve() {
-        int n = readInt();
-        int m = readInt();
+        int a = readInt();
+        int b = readInt();
+        int c = readInt();
+        int d = readInt();
 
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++) {
-            arr[i] = readInt();
-        }
-
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
-        }
+        int n = b*d;
+        int m = a*d + b*c;
+        int mnGcd = gcd(m, n);
+        m = m / mnGcd;
+        n = n / mnGcd;
+        out.println(m + " " + n);
     }
 
-    private String getNotMin(int l, int r, int[] arr) {
-        int min = arr[l], max = min;
-        for(int i = l; i <= r; i++) {
-            min = Math.min(min, arr[i]);
-            max = Math.max(max, arr[i]);
-        }
-        return (min == max) ? "NOT FOUND" : String.valueOf(max);
+    private int gcd(int a, int b) {
+        return (a == 0 ? b : gcd(b % a, a));
     }
 
     private int readInt() {

@@ -7,13 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class NotMinOnSegment {
+public class MoscowTrip {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new MoscowTrip().run();
     }
 
     private void run() {
@@ -30,30 +30,33 @@ public class NotMinOnSegment {
     }
 
     private void solve() {
-        int n = readInt();
-        int m = readInt();
+        double x1 = (double) readInt();
+        double y1 = (double) readInt();
+        double x2 = (double) readInt();
+        double y2 = (double) readInt();
 
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++) {
-            arr[i] = readInt();
-        }
+        double angleA = Math.atan2(y1, x1);
+        double angleB = Math.atan2(y2, x2);
 
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
-        }
+        double angleAB = angleB - angleA;
+        while (angleAB > Math.PI)
+            angleAB -= 2*Math.PI;
+        while (angleAB < -Math.PI)
+            angleAB += 2*Math.PI;
+
+        double lenA = Math.sqrt(x1*x1 + y1*y1);
+        double lenB = Math.sqrt(x2*x2 + y2*y2);
+
+        double maxLen = Math.max(lenA, lenB);
+        double minLen = Math.min(lenA, lenB);
+
+        double ansForLine = lenA + lenB;
+        double ansForArc = (maxLen - minLen) + Math.abs(minLen*angleAB);
+        double ans = Math.min(ansForLine, ansForArc);
+
+        out.printf("%.9f\n", ans);
     }
 
-    private String getNotMin(int l, int r, int[] arr) {
-        int min = arr[l], max = min;
-        for(int i = l; i <= r; i++) {
-            min = Math.min(min, arr[i]);
-            max = Math.max(max, arr[i]);
-        }
-        return (min == max) ? "NOT FOUND" : String.valueOf(max);
-    }
 
     private int readInt() {
         return Integer.parseInt(readString());

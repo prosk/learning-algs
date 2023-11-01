@@ -7,13 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class NotMinOnSegment {
+public class AverageLevel {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new AverageLevel().run();
     }
 
     private void run() {
@@ -31,19 +31,32 @@ public class NotMinOnSegment {
 
     private void solve() {
         int n = readInt();
-        int m = readInt();
 
         int[] arr = new int[n];
+        int sum = 0;
         for(int i = 0; i < n; i++) {
             arr[i] = readInt();
+            sum += arr[i];
         }
 
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
+        int[] ans = new int[n];
+
+        int leftSum = 0, rightSum;
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < n; i++) {
+            rightSum = sum - leftSum - arr[i];
+            if (i == 0) {
+                ans[i] = rightSum - arr[i]*(n - i - 1);
+            } else if (i == n-1) {
+                ans[i] = arr[i]*i - leftSum;
+            } else {
+                ans[i] = arr[i]*i - leftSum + rightSum - arr[i]*(n - i - 1);
+            }
+            leftSum += arr[i];
+            sb.append(ans[i]);
+            if (i < n-1) sb.append(' ');
         }
+        out.println(sb);
     }
 
     private String getNotMin(int l, int r, int[] arr) {
