@@ -1,19 +1,24 @@
 package com.mycompany.yandex.training40.sort;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Random;
 import java.util.StringTokenizer;
 
-public class PartitionCreator {
-    final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    final PrintWriter out = new PrintWriter(System.out);
-    StringTokenizer tok = new StringTokenizer("");
+public class QuickSort {
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final PrintWriter out = new PrintWriter(System.out);
+    private StringTokenizer tok = new StringTokenizer("");
+
+    private final Random rand = new Random();
+
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new PartitionCreator().run();
+        new QuickSort().run();
     }
 
     private void run() {
@@ -35,15 +40,30 @@ public class PartitionCreator {
         a[j] = temp;
     }
 
-    private int partition(int[] a, int startInd, int endInd, int pivotElem) {
-        int swapInd = startInd;
-        for(int i = startInd; i <= endInd; i++) {
-            if (a[i] < pivotElem) {
-                swap(a, i, swapInd);
-                swapInd++;
+    private Point partition(int[] a, int startInd, int endInd) {
+        int lt = startInd, i = startInd+1, gt = endInd;
+        int pivotInd = startInd + rand.nextInt(endInd-startInd+1);
+        int pivot = a[pivotInd];
+        swap(a, startInd, pivotInd);
+        while(i <= gt) {
+            if (a[i] < pivot) {
+                swap(a, lt++, i++);
+            } else if (a[i] > pivot) {
+                swap(a, i, gt--);
+            } else {
+                i++;
             }
         }
-        return swapInd;
+        // a[startInd..lt-1] < pivot = a[lt..gt] < a[gt+1..hi]
+        return new Point(lt, gt);
+    }
+
+    private void sort(int[] a, int startInd, int endInd) {
+        if (startInd < endInd) {
+            Point pivot = partition(a, startInd, endInd);
+            sort(a, startInd, pivot.x-1);
+            sort(a, pivot.y+1, endInd);
+        }
     }
 
     private void solve() {
@@ -53,12 +73,15 @@ public class PartitionCreator {
         for(int i = 0; i < n; i++) {
             arr[i] = readInt();
         }
-        int pivotElem = readInt();
 
-        int lessCnt = partition(arr, 0, arr.length-1, pivotElem);
+        sort(arr, 0, arr.length-1);
 
-        out.println(lessCnt);
-        out.println(arr.length - lessCnt);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < arr.length; i++) {
+            sb.append(arr[i]);
+            if (i < arr.length - 1) sb.append(' ');
+        }
+        out.println(sb);
     }
 
     private int readInt() {
