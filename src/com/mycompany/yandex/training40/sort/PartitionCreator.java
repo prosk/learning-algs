@@ -1,4 +1,4 @@
-package com.mycompany.yandex.training40.warmup;
+package com.mycompany.yandex.training40.sort;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,14 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-
-public class NotMinOnSegment {
+public class PartitionCreator {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new PartitionCreator().run();
     }
 
     private void run() {
@@ -30,21 +29,36 @@ public class NotMinOnSegment {
         }
     }
 
+    private void swap(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    private int partition(int[] a, int startInd, int endInd, int pivotElem) {
+        int swapInd = startInd;
+        for(int i = startInd; i <= endInd; i++) {
+            if (a[i] < pivotElem) {
+                swap(a, i, swapInd);
+                swapInd++;
+            }
+        }
+        return swapInd;
+    }
+
     private void solve() {
         int n = readInt();
-        int m = readInt();
 
         int[] arr = new int[n];
         for(int i = 0; i < n; i++) {
             arr[i] = readInt();
         }
+        int pivotElem = readInt();
 
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
-        }
+        int lessCnt = partition(arr, 0, arr.length-1, pivotElem);
+
+        out.println(lessCnt);
+        out.println(arr.length - lessCnt);
     }
 
     private String getNotMin(int l, int r, int[] arr) {
