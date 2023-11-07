@@ -36,7 +36,7 @@ public class ContestResult {
 
         int maxA = a;
         int qB = b / n, rB = b % n;
-        int minB = (rB == 0) ? qB : qB+1;
+        int minB = (rB == 0) ? qB : qB+1; // либо можно так: minB = (b + n - 1) / n;
         String ans = (maxA > minB) ? "Yes" : "No";
 
         out.println(ans);
