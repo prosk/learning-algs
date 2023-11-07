@@ -1,20 +1,24 @@
-package com.mycompany.yandex.training40.warmup;
+package com.mycompany.yandex.training40.sort;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Random;
 import java.util.StringTokenizer;
 
+public class RadixSort {
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final PrintWriter out = new PrintWriter(System.out);
+    private StringTokenizer tok = new StringTokenizer("");
 
-public class NotMinOnSegment {
-    final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    final PrintWriter out = new PrintWriter(System.out);
-    StringTokenizer tok = new StringTokenizer("");
+    private final Random rand = new Random();
+
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new RadixSort().run();
     }
 
     private void run() {
@@ -30,30 +34,31 @@ public class NotMinOnSegment {
         }
     }
 
-    private void solve() {
-        int n = readInt();
-        int m = readInt();
-
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++) {
-            arr[i] = readInt();
-        }
-
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
-        }
+    private void sortByDigit(String a[], String[] sorted, int digitPos) {
+        int[] count = new int[10];
+        int[] pos = new int[10];
+        /*for(int i = 0; i < a.length; i++)
+            count[a[i].charAt(digitPos)]*/
     }
 
-    private String getNotMin(int l, int r, int[] arr) {
-        int min = arr[l], max = min;
-        for(int i = l; i <= r; i++) {
-            min = Math.min(min, arr[i]);
-            max = Math.max(max, arr[i]);
+    private void sort(String[] a) {
+        int len = a[0].length();
+        String[] b = new String[a.length];
+        boolean changeArrays = false;
+        for(int i = len-1; i >= 0; i--)
+            sortByDigit(changeArrays ? b : a, changeArrays ? a : b, i);
+            changeArrays = !changeArrays;
+    }
+
+    private void solve() {
+        int n = readInt();
+
+        String[] arr = new String[n];
+        for(int i = 0; i < n; i++) {
+            arr[i] = readString();
         }
-        return (min == max) ? "NOT FOUND" : String.valueOf(max);
+
+        sort(arr);
     }
 
     private int readInt() {

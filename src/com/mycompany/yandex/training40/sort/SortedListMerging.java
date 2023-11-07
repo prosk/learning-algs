@@ -1,4 +1,4 @@
-package com.mycompany.yandex.training40.warmup;
+package com.mycompany.yandex.training40.sort;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,14 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-
-public class NotMinOnSegment {
+public class SortedListMerging {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new NotMinOnSegment().run();
+        new SortedListMerging().run();
     }
 
     private void run() {
@@ -30,30 +29,51 @@ public class NotMinOnSegment {
         }
     }
 
-    private void solve() {
-        int n = readInt();
-        int m = readInt();
+    // merge sub-arrays a[startInd..midInd] and a[midInd+1, endInd]
+    // startInd <= midInd < endInd
+    private void merge(int[] a, int startInd, int midInd, int endInd) {
+        int n1 = midInd - startInd + 1;
+        int n2 = endInd - midInd;
+        int[] left = new int[n1+1];
+        int[] right = new int[n2+1];
 
-        int[] arr = new int[n];
-        for(int i = 0; i < n; i++) {
-            arr[i] = readInt();
-        }
+        System.arraycopy(a, startInd, left, 0, n1);
+        System.arraycopy(a, midInd+1, right, 0, n2);
+        left[n1] = Integer.MAX_VALUE;
+        right[n2] = Integer.MAX_VALUE;
 
-        for(int i = 1; i <= m; i++) {
-            int l = readInt();
-            int r = readInt();
-            String ans = getNotMin(l, r, arr);
-            out.println(ans);
+        int i = 0, j = 0;
+        for(int k = startInd; k <= endInd; k++) {
+            if (left[i] <= right[j]) {
+                a[k] = left[i];
+                i++;
+            } else {
+                a[k] = right[j];
+                j++;
+            }
         }
     }
 
-    private String getNotMin(int l, int r, int[] arr) {
-        int min = arr[l], max = min;
-        for(int i = l; i <= r; i++) {
-            min = Math.min(min, arr[i]);
-            max = Math.max(max, arr[i]);
+    private void solve() {
+        int[] arr = new int[2_000_000];
+        int n = readInt();
+        for(int i = 0; i < n; i++) {
+            arr[i] = readInt();
         }
-        return (min == max) ? "NOT FOUND" : String.valueOf(max);
+        int m = readInt();
+        for(int i = n; i < n+m; i++) {
+            arr[i] = readInt();
+        }
+
+        merge(arr, 0, n-1, n+m-1);
+
+        int len = n + m;
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < len; i++) {
+            sb.append(arr[i]);
+            if (i < len - 1) sb.append(' ');
+        }
+        out.println(sb);
     }
 
     private int readInt() {
