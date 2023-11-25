@@ -49,7 +49,7 @@ public class MaxCut {
         int maxGrayNum = ((1 << N) - 1) / 2;
         int prevGrayNum = 0; // all vertexes are in part = 0
         for(int i = 1; i <= maxGrayNum; i++) {
-            int currGrayNum = i ^ (i >> 1);
+            int currGrayNum = i ^ (i >> 1);  // g(k) = k XOR (k // 2)
             // out.println(Integer.toBinaryString(currGrayNum));
             int modifiedNum = prevGrayNum ^ currGrayNum;
             int prevPart = (prevGrayNum & modifiedNum) > 0 ? 1 : 0;
