@@ -69,17 +69,19 @@ public class DigitCounter {
 
     public static void main(String[] args) {
         DigitCounter digitCounter = new DigitCounter();
-        System.out.println("Simple solution");
+        /*System.out.println("Simple solution");
         System.out.println("L=10, R=19, X=1: ans = " + digitCounter.simpleCountX(10, 19, 1));
         System.out.println("L=18, R=81, X=9: ans = " + digitCounter.simpleCountX(18, 81, 9));
         System.out.println("L=504, R=7382, X=0: ans = " + digitCounter.simpleCountX(504, 7382, 0));
         System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.simpleCountX(73, 1028, 5));
+        System.out.println("L=70, R=102, X=0: ans = " + digitCounter.simpleCountX(70, 102, 0));
 
         System.out.println("Optimal solution");
         System.out.println("L=10, R=19, X=1: ans = " + digitCounter.countX(10, 19, 1));
         System.out.println("L=18, R=81, X=9: ans = " + digitCounter.countX(18, 81, 9));
         System.out.println("L=504, R=7382, X=0: ans = " + digitCounter.countX(504, 7382, 0));
-        System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.countX(73, 1028, 5));
+        System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.countX(73, 1028, 5));*/
+        System.out.println("L=70, R=102, X=0: ans = " + digitCounter.countX(70, 102, 0));
     }
 
 }
