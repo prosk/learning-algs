@@ -1,4 +1,4 @@
-package com.mycompany.yandex.training40.contest;
+package com.mycompany.codeforces.div3round913;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,13 +7,13 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-public class TaskA {
+public class Rook {
     final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     final PrintWriter out = new PrintWriter(System.out);
     StringTokenizer tok = new StringTokenizer("");
     public static void main(String[] args) {
         Locale.setDefault(Locale.US);
-        new TaskA().run();
+        new Rook().run();
     }
 
     private void run() {
@@ -30,31 +30,39 @@ public class TaskA {
     }
 
     private void solve() {
-        int x = readInt();
-        int aInd = 1, bInd = 1;
-        int targetInd = 0;
-        boolean found = false;
-        long curr = 0;
-        while(!found) {
-            targetInd++;
-            long aElem = (long)aInd*aInd;
-            long bElem = (long)bInd*bInd*bInd;
-            if (aElem < bElem) {
-                curr = aElem;
-                aInd++;
-            } else if (aElem > bElem) {
-                curr = bElem;
-                bInd++;
-            } else {
-                curr = aElem;
-                aInd++;
-                bInd++;
-            }
-            if (targetInd == x) {
-                found = true;
+        int t = readInt();
+        String[] inp = new String[t];
+        for(int i = 0; i < t; i++)
+            inp[i] = readString();
+
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < t; i++) {
+            int currCol = chrToNum(inp[i].charAt(0));
+            int currRow = (int)inp[i].charAt(1) - 48;
+
+            for(int j = 1; j <= 8; j++) {
+                // j - row
+                if (j != currRow) {
+                    sb.append(inp[i].charAt(0));
+                    sb.append(j);
+                    sb.append('\n');
+                }
+                // j - col
+                if (j != currCol) {
+                    sb.append(numToChr(j));
+                    sb.append(inp[i].charAt(1));
+                    sb.append('\n');
+                }
             }
         }
-        out.println(curr);
+        out.print(sb);
+    }
+
+    private int chrToNum(char chr) {
+        return (int)chr - 96;
+    }
+    private char numToChr(int num) {
+        return (char)(num + 96);
     }
 
     private int readInt() {
