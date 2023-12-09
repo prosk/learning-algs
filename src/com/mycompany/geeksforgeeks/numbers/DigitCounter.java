@@ -37,6 +37,7 @@ public class DigitCounter {
         return ans;
     }
 
+    // original solution from geeks2geeks
     int countXHelper(int N, int X)
     {
 
@@ -66,8 +67,73 @@ public class DigitCounter {
         return cnt;
     }
 
+    // more explainable solution
+    int myCountXHelper(int N, int X)
+    {
+        int cnt = 0;
+
+        // place - разряд 1- единицы 10 - десятки 100 - сотни и тд
+        for (int place = 1; place <= N; place *= 10) {
+            // groupSize - число чисел в одной группе для которой считаем число появлений цифры X в разряде place
+            int groupSize = place * 10;
+            int fullGroupCnt = N / groupSize;
+            int numbersInPartialGroupCnt = N % groupSize; // 0 <= numbersInPartialGroupCnt < groupSize
+            int digitOccurencesInOneGroup = place; // число появлений цифры X в разряде place в ОДНОЙ группе
+
+            if (X > 0) {
+                // more simple case when X is non zero digit
+                cnt += (fullGroupCnt * digitOccurencesInOneGroup);
+
+                // такая логика с остатком так как внутри одной группы сначала идут digitOccurencesInOneGroup единиц,
+                // потом digitOccurencesInOneGroup двоек, потом троек и тд до digitOccurencesInOneGroup девяток
+                if (numbersInPartialGroupCnt >= X*place) {
+                    if (numbersInPartialGroupCnt < (X+1)*place) {
+                        cnt += (numbersInPartialGroupCnt - X*place + 1);
+                    } else {
+                        cnt += digitOccurencesInOneGroup;
+                    }
+                }
+
+            } else {
+                // X == 0
+                //  в самой первой группе нулей в разряде place нету
+                // например для 2-го разряда нет нулей в числах 0-99, для 3-го разряда нет нулей в числах 0-999
+                // (само число 0 и "ведушие" нули слева мы не считаем)
+                // +1 так как нам надо добавить 0 в самой последнем числе которое не вошло ни в одну группу
+                // 100, 300, 1000, 2000, 10000 и тп
+
+                // основная часть
+                if (fullGroupCnt > 1) {
+                    cnt = cnt + (fullGroupCnt-1) * digitOccurencesInOneGroup + 1;
+                } else if (fullGroupCnt == 1) {
+                    cnt = cnt + 1;
+                }
+                // остаток
+                if (fullGroupCnt >= 1) {
+                    if (numbersInPartialGroupCnt > 0) {
+                        if (numbersInPartialGroupCnt < place) {
+                            cnt += (numbersInPartialGroupCnt + 1);
+                        } else {
+                            cnt += digitOccurencesInOneGroup;
+                        }
+                        cnt--; // вычитам 1 так как мы учли 0 в числах типа 100 300 5000 в основной части
+                    }
+                } else {
+                    // fullGroupCnt = 0
+                    // есть только остаток, но в самой первой группе (еще и неполной) нулей нету
+                    // нулей нет даже в полной первой группе типа 0-99 0-999 и тд
+                }
+            }
+        }
+        return cnt;
+    }
+
     int countX(int L, int R, int X) {
         return countXHelper(R - 1, X) - countXHelper(L, X);
+    }
+
+    int myCountX(int L, int R, int X) {
+        return myCountXHelper(R - 1, X) - myCountXHelper(L, X);
     }
 
     public static void main(String[] args) {
@@ -77,14 +143,21 @@ public class DigitCounter {
         System.out.println("L=18, R=81, X=9: ans = " + digitCounter.simpleCountX(18, 81, 9));
         System.out.println("L=504, R=7382, X=0: ans = " + digitCounter.simpleCountX(504, 7382, 0));
         System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.simpleCountX(73, 1028, 5));
-        System.out.println("L=70, R=102, X=0: ans = " + digitCounter.simpleCountX(70, 102, 0));
+        System.out.println("L=70, R=102, X=0: ans = " + digitCounter.simpleCountX(70, 102, 0)); */
 
         System.out.println("Optimal solution");
         System.out.println("L=10, R=19, X=1: ans = " + digitCounter.countX(10, 19, 1));
         System.out.println("L=18, R=81, X=9: ans = " + digitCounter.countX(18, 81, 9));
         System.out.println("L=504, R=7382, X=0: ans = " + digitCounter.countX(504, 7382, 0));
-        System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.countX(73, 1028, 5));*/
+        System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.countX(73, 1028, 5));
         System.out.println("L=70, R=102, X=0: ans = " + digitCounter.countX(70, 102, 0));
+
+        System.out.println("Explainable Optimal solution");
+        System.out.println("L=10, R=19, X=1: ans = " + digitCounter.myCountX(10, 19, 1));
+        System.out.println("L=18, R=81, X=9: ans = " + digitCounter.myCountX(18, 81, 9));
+        System.out.println("L=504, R=7382, X=0: ans = " + digitCounter.myCountX(504, 7382, 0));
+        System.out.println("L=73, R=1028, X=5: ans = " + digitCounter.myCountX(73, 1028, 5));
+        System.out.println("L=70, R=102, X=0: ans = " + digitCounter.myCountX(70, 102, 0));
     }
 
 }
