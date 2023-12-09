@@ -34,36 +34,61 @@ public class CollectionGame {
         for(int i = 0; i < t; i++) {
             int N = readInt();
             int[] arr = new int[N];
+            int[] arrState = new int[N];
+            int[] arrZeroState = new int[N];
             for(int j = 0; j < N; j++) {
                 arr[j] = readInt();
             }
+            Arrays.sort(arr);
+
 
             StringBuilder ans = new StringBuilder();
             for(int curr = 0; curr < N; curr++) {
                 // curr - deleted elem index
-                TreeSet<Pair> currSet = new TreeSet<>();
-                for(int j = 0; j < N; j++) {
-                    if (j != curr)
-                        currSet.add(new Pair(j, arr[j]));
-                }
+                arrState[curr] = 1; // deleted
                 long currAccount = arr[curr];
                 int currAns = 0;
-                while(!currSet.isEmpty()) {
+                while(currAns < N-1) {
                     // try to find elem to delete
-                    Pair foundedElem = currSet.lower(new Pair(-1, currAccount+1));
-                    if (foundedElem == null) {
+                    int foundedInd = rightBound(arr, arrState, currAccount, 0, N-1);
+                    if (foundedInd == -1) {
                         break;
                     } else {
-                        currAccount += foundedElem.val;
-                        currSet.remove(foundedElem);
+                        currAccount += arr[foundedInd];
+                        arrState[foundedInd] = 1; // deleted
                         currAns++;
                     }
                 }
                 ans.append(currAns);
                 if (curr < N-1) ans.append(' ');
+                System.arraycopy(arrZeroState, 0, arrState, 0, N);
             }
             out.println(ans);
         }
+    }
+
+    // максимальный индекс i, для которого a[i] <= currAccount и aState[i] = 0
+    // если все a[i] у которых aState[i] = 0 больше currAccount, вернет -1
+    int rightBound(int[] a, int[] aState, long currAccount, int startL, int startR) {
+        int res = -1;
+        int l = startL, r = startR;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (a[mid] <= currAccount) {
+                if (aState[mid] == 0) {
+                    res = mid;
+                    l = mid + 1;
+                } else {
+                    // запускаем бин поиски слева и справа от mid
+                    int res1 = rightBound(a, aState, currAccount, l, mid-1);
+                    int res2 = rightBound(a, aState, currAccount, mid+1, r);
+                    return Math.max(Math.max(res1, res2), res);
+                }
+            } else {
+                r = mid - 1;
+            }
+        }
+        return res;
     }
 
     private int readInt() {
@@ -90,9 +115,9 @@ public class CollectionGame {
 
     private static class Pair implements Comparable<Pair> {
         public int ind;
-        public long val;
+        public int val;
 
-        public Pair(int ind, long val) {
+        public Pair(int ind, int val) {
             this.ind = ind;
             this.val = val;
         }
@@ -113,7 +138,7 @@ public class CollectionGame {
         @Override
         public int compareTo(Pair o) {
             return (this.val == o.val) ? Integer.compare(this.ind, o.ind) :
-                    Long.compare(this.val, o.val);
+                    Integer.compare(this.val, o.val);
         }
     }
 }
