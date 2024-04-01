@@ -1,17 +1,20 @@
 package com.mycompany.tagirvaleev;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.IntSupplier;
+import java.util.stream.Collectors;
 
 public class LambdaCapture {
     int field = 10;
     static int sField = 15;
 
     static int x = 5;
+
     public static void main(String[] args) {
         List<IntSupplier> list = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             x++;
             int xx = x;
             IntSupplier l1 = () -> xx * xx;
@@ -19,6 +22,11 @@ public class LambdaCapture {
         }
         for (IntSupplier intSupplier : list) {
             System.out.println(intSupplier.getAsInt());
+            Class<?> clazz = intSupplier.getClass();
+            System.out.println("clazz = " + clazz.getCanonicalName());
+            System.out.println("clazz interfaces = " + Arrays.stream(clazz.getInterfaces())
+                    .map(Class::getCanonicalName)
+                    .collect(Collectors.joining(", ")).toString());
         }
 
         System.out.println("Run test() method");
