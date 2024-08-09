@@ -79,6 +79,8 @@ public class Formatter {
     }
 
     public static void main(String[] args) {
+        String uuid = "8678006d-a010-4d6b-9383-358ae4dc3441";
+
         /*System.out.println(formatNoStyle(null));
         System.out.println(formatNoStyle(2.0));
         System.out.println(formatNoStyle(2.45));
