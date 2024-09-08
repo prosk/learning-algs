@@ -1,5 +1,10 @@
-import java.io.*;
-import java.util.*;
+package com.mycompany.templates;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 public class AbSum {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
