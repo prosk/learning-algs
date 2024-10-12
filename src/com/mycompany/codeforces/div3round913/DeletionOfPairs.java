@@ -18,7 +18,13 @@ public class DeletionOfPairs {
                 freq[(int)s.charAt(i)-97]++;
             }
             int max = Arrays.stream(freq).max().getAsInt();
+            // two cases: case1: max >= n/2 => ans1 = n - 2*(n - max)
+            //            case2: max < n/2  => ans2 = n % 2
+            // for case2: ans1 <= 0
+            // count of deleted = 2 * (n - max)
+            // gghhhhhhhgg (max = 7, n = 11, count of deleted = 2 * (11 - 7)
             int ans = Math.max(n % 2, n - 2*(n - max));
+            // abhhhrt  n = 7 max = 3 n - 2*(n - max) = 7 - 2 * 4 = -1
             out.println(ans);
         }
         out.close();

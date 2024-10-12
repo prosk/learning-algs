@@ -1,4 +1,4 @@
-package com.mycompany.codeforces.random.div2betaround4;
+package com.mycompany.codeforces.div2betaround4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
