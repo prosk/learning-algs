@@ -1,4 +1,4 @@
-// package com.mycompany.codeforces.problemset.comp800;
+// package com.mycompany.codeforces.div2round978;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,29 +6,36 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class WayTooLongWords {
+public class KarSalesmanOpt {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
     static StringTokenizer tok = new StringTokenizer("");
 
     public static void main(String[] args) {
-        new WayTooLongWords().run();
+        new KarSalesmanOpt().run();
         out.close();
     }
 
     void run() {
-        int n = readInt();
-        while(n > 0) {
-            String word = readString();
-            int len = word.length();
-            if (len > 10)
-                out.println(word.charAt(0) + String.valueOf(len-2) + word.charAt(len-1));
-            else
-                out.println(word);
-                out.flush();
-            n--;
+        int t = readInt();
+        while (t > 0) {
+            solve();
+            t--;
         }
+    }
 
+    void solve() {
+        int n = readInt();
+        int x = readInt();
+        long[] arr = new long[n];
+        long sum = 0, arrMax = 0;
+        for(int i = 0; i < n; i++) {
+            arr[i] = readInt();
+            arrMax = Math.max(arrMax, arr[i]);
+            sum += arr[i];
+        }
+        long ans = Math.max(arrMax, (sum + x - 1) / x);
+        out.println(ans);
     }
 
     int readInt() {
