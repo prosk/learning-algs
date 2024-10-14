@@ -83,6 +83,18 @@ public class NewGame {
             cout << ans << '\n';
         }
 
+        Вариант от  neal
+
+        sort(A.begin(), A.end());
+        int best = 0;
+        for (int i = 0, j = 0; i < N; i++) {
+            j = max(j, i);
+            while (j < N && A[j] - A[i] < K && (j == i || A[j] - A[j - 1] <= 1))
+                j++;
+            best = max(best, j - i);
+        }
+        cout << best << '\n';
+
      */
 
     void solve() {
