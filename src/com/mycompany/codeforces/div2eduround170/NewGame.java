@@ -66,6 +66,23 @@ public class NewGame {
         }
         cout << answer << '\n';
 
+        Еще суперлаконично от Ormlis
+
+        void solve() {
+            int n, k; cin >> n >> k;
+            vi a(n);
+            rep(i, n) cin >> a[i];
+            sort(all(a));
+            int r = 0;
+            int ans = 0;
+            for(int l = 0; l < n; ++l) {
+                r = max(r, l + 1);
+                while (r < n && a[r] - a[l] < k && a[r] <= a[r - 1] + 1) r++;
+                ckmax(ans, r - l);
+            }
+            cout << ans << '\n';
+        }
+
      */
 
     void solve() {
