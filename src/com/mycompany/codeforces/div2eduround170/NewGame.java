@@ -49,6 +49,23 @@ public class NewGame {
     }
     std::cout << ans << "\n";
     }
+
+    Также лаконичный вариант от DmitryLzr
+
+        sort(arr.begin(), arr.end());
+        int answer = 0;
+        int ptr = 0;
+        for (int i = 0; i < n; i++) {
+            if (i > 0 && arr[i - 1] + 1 < arr[i]) {
+                ptr = i;
+            }
+            while (ptr < i && arr[i] - arr[ptr] + 1 > k) {
+                ptr++;
+            }
+            answer = max(answer, i - ptr + 1);
+        }
+        cout << answer << '\n';
+
      */
 
     void solve() {
