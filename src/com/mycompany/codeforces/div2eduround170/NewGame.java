@@ -25,6 +25,32 @@ public class NewGame {
         }
     }
 
+    /*
+    Solution from jiangly
+
+    void solve() {
+    int n, k;
+    std::cin >> n >> k;
+
+    std::vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        std::cin >> a[i];
+    }
+    std::sort(a.begin(), a.end());
+
+    int ans = 0;
+
+    for (int i = 0, j = 0; i < n; i++) {
+        j = std::max(j, i);
+        while (j + 1 < n && a[j + 1] <= a[j] + 1 && a[j + 1] < a[i] + k) {
+            j++;
+        }
+        ans = std::max(ans, j - i + 1);
+    }
+    std::cout << ans << "\n";
+    }
+     */
+
     void solve() {
         int n = readInt();
         int k = readInt();
