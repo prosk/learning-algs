@@ -25,6 +25,33 @@ public class TaskB {
         }
     }
 
+    /*
+
+    Эквивалентное но более лаконичное решение от liyujiangwx
+
+    const int N=2e5+10;
+int n,k,a[N],T,cnt,sum[N];
+
+signed main(){
+	cin>>T;
+	while(T--){
+		cin>>n>>k;cnt=k;
+		for(int i=1;i<=n;++i) cin>>a[i];
+		sort(a+1,a+1+n);
+		for(int i=1;i<=n;++i){
+			sum[i]=sum[i-1]+a[i];
+			int tmp=(a[i]-a[i-1])*(n-i+1);
+//			cout<<i<<' '<<tmp<<endl;
+			if(i!=1) ++cnt;
+			k-=tmp;
+			if(k<=0) break;
+		}
+		cout<<cnt<<endl;
+	}
+	return 0;
+}
+     */
+
     void solve() {
         int n = readInt();
         long k = readInt();
