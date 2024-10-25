@@ -1,4 +1,4 @@
-// package com.mycompany.codeforces.div2round980;
+// package com.mycompany.codeforces.div3round981;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class TaskA {
+public class TaskAA {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
     static StringTokenizer tok = new StringTokenizer("");
@@ -25,10 +25,16 @@ public class TaskA {
     }
 
     void solve() {
-        int a = readInt();
-        int b = readInt();
-        int ans = (a >= b) ? a : Math.max(2*a - b, 0);
-        out.println(ans);
+        int n = readInt();
+        int sign = -1;
+        int x = 0, step = 1;
+        while(true) {
+            x += step * sign;
+            if (Math.abs(x) > n) break;
+            sign = -1 * sign;
+            step += 2;
+        }
+        out.println(sign < 0 ? "Sakurako" : "Kosuke");
     }
 
     int readInt() {
