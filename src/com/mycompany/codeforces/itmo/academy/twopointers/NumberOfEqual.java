@@ -17,6 +17,28 @@ public class NumberOfEqual {
     }
 
     /*
+
+      Альтернативные решения от v0s7er
+
+      Очевидное решение через мапы и подсчет количеств
+
+      private void solve() {
+        int n = ri(), m = ri();
+        int[] a = ria(n);
+        int[] b = ria(m);
+        HashMap<Integer, Integer> num2count = new HashMap<>();
+        for(int i = 0; i < n; i++) {
+            num2count.put(a[i], num2count.getOrDefault(a[i], 0) + 1);
+        }
+
+        long ans = 0;
+        for(int i = 0; i < m; i++) {
+            ans+=num2count.getOrDefault(b[i], 0);
+        }
+
+        out.println(ans);
+    }
+
       Более хитрое решение на С++ тоже через 2 указателя
 
       Пока двигаем j вперед на равных элеметах в b,
