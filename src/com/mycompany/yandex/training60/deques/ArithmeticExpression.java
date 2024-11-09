@@ -70,9 +70,71 @@ public class ArithmeticExpression {
             out.println("WRONG");
             return;
         }
-        for(String token: tokens) {
+        /*for(String token: tokens) {
             out.println(token);
+        }*/
+        // infix form to postfix form
+        List<String> postfixTokens = new ArrayList<>();
+        Deque<String> opsStack = new ArrayDeque<>();
+        Map<String, Integer> ops = new HashMap<>();
+        ops.put("+", 1);
+        ops.put("-", 1);
+        ops.put("*", 2);
+        for(String token: tokens) {
+            if(isDigitToken(token)) {
+                postfixTokens.add(token);
+            } else if (ops.containsKey(token)) {
+                if (opsStack.isEmpty()) {
+                    opsStack.push(token);
+                } else {
+                    int priority = ops.get(token);
+                    while(!opsStack.isEmpty() && ops.getOrDefault(opsStack.peek(), -1) >= priority) {
+                        String op = opsStack.pop();
+                        postfixTokens.add(op);
+                    }
+                    opsStack.push(token);
+                }
+            } else if ("(".equals(token)) {
+                opsStack.push(token);
+            } else if (")".equals(token)) {
+                while(!"(".equals(opsStack.peek())) {
+                    String op = opsStack.pop();
+                    postfixTokens.add(op);
+                }
+                opsStack.pop();
+            }
         }
+        while(!opsStack.isEmpty()) {
+            String op = opsStack.pop();
+            postfixTokens.add(op);
+        }
+        /*out.println("Postfix tokens");
+        for(String token: postfixTokens) {
+            out.println(token);
+        }*/
+
+        // calculate postfix expression
+        Deque<Integer> exprStack = new ArrayDeque<>();
+        for (String currToken: postfixTokens) {
+            if (currToken.equals("*") || currToken.equals("+")|| currToken.equals("-")) {
+                int secondOp, firstOp;
+                try {
+                    secondOp = exprStack.pop();
+                    firstOp = exprStack.pop();
+                } catch (NoSuchElementException e) {
+                    out.println("WRONG");
+                    return;
+                }
+                int res = currToken.equals("*") ? firstOp*secondOp :
+                        (currToken.equals("+") ? firstOp+secondOp : firstOp-secondOp);
+                exprStack.push(res);
+            } else {
+                int currOp = Integer.parseInt(currToken);
+                exprStack.push(currOp);
+            }
+        }
+        int exprValue = exprStack.pop();
+        out.println(exprValue);
 
     }
 
