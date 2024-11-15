@@ -15,6 +15,28 @@ public class AVLChecker {
 
     boolean isAVL = true;
 
+    /*
+     Более простое решение
+     Сначала просто для каждого узла дерева считаем глубину левого и правого поддеревьев
+     А потом проходимся еще раз по всем узлам и делаем проверку
+
+     def is_avl_tree(keys):
+        bst = BSTNode()
+        for key in keys:
+            bst.insert_recursive(key)
+
+        is_avl = True
+
+        for node in bst:
+            is_avl = is_avl and (abs(node.left_subtree_depth - node.right_subtree_depth) <= 1)
+
+        return 'YES' if is_avl else 'NO'
+
+    Ссылка на такое решение
+    https://github.com/Yankovsky/yandex-algos-training/blob/master/hw8/h.py
+
+     */
+
     public static void main(String[] args) {
         new AVLChecker().run();
         out.close();
