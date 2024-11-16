@@ -35,23 +35,50 @@ public class BinaryArrayZeroPos {
     }
 
     void runTests() {
-        int pos = solveOpt(new int[]{0, 0, 1});
+        int pos = solveOpt2(new int[]{0, 0, 1});
         out.println(pos == 0 ? "OK" : "ERROR");
 
-        pos = solveOpt(new int[]{1, 0, 0, 0, 0});
+        pos = solveOpt2(new int[]{1, 1, 1, 1, 0});
         out.println(pos == 4 ? "OK" : "ERROR");
 
-        pos = solveOpt(new int[]{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1});
+        pos = solveOpt2(new int[]{1, 0, 0, 0, 0});
+        out.println(pos == 4 ? "OK" : "ERROR");
+
+        pos = solveOpt2(new int[]{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1});
         out.println(pos == 7 ? "OK" : "ERROR");
 
-        pos = solveOpt(new int[]{1, 0, 0, 1, 1, 0, 1});
-        out.println(pos == 2 ? "OK" : "ERROR");
+        pos = solveOpt2(new int[]{1, 0, 0, 1, 1, 0, 1});
+        out.println(pos == 1 ? "OK" : "ERROR");
 
-        pos = solveOpt(new int[]{0, 0, 1, 0, 0, 0});
+        pos = solveOpt2(new int[]{0, 0, 1, 0, 0, 0});
         out.println(pos == 5 ? "OK" : "ERROR");
 
-        pos = solveOpt(new int[]{0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1});
+        pos = solveOpt2(new int[]{0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1});
         out.println(pos == 13 ? "OK" : "ERROR");
+    }
+
+    // идея упрощения - вообще забываем про нули
+    // оперируем только текущая позиция единицы и предыдущая позиция единицы
+    int solveOpt2(int[] arr) {
+        int lastOnePos = -1, pos = -1, maxDist = 0;
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] == 1) {
+                if (lastOnePos >= 0) {
+                    int dist = (i - lastOnePos)/2;
+                    if (dist > maxDist) {
+                        maxDist = dist;
+                        pos = lastOnePos + dist;
+                    }
+                } else if (i > 0) {
+                    maxDist = i;
+                    pos = 0;
+                }
+                lastOnePos = i;
+            }
+        }
+        if ((arr.length - 1 - lastOnePos) > maxDist)
+            pos = arr.length-1;
+        return pos;
     }
 
     // oneWasSeen - булевый признак, была ли уже 1 в ранее просмотренной части последовательности
