@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class BinaryArrayZeroPos {
@@ -12,7 +13,8 @@ public class BinaryArrayZeroPos {
     static StringTokenizer tok = new StringTokenizer("");
 
     public static void main(String[] args) {
-        new BinaryArrayZeroPos().run();
+        //new BinaryArrayZeroPos().run();
+        new BinaryArrayZeroPos().runTests();
         out.close();
     }
 
@@ -28,8 +30,63 @@ public class BinaryArrayZeroPos {
         for(int i = 0; i < n; i++) {
             arr[i] = readInt();
         }
-        int pos = solve(arr);
+        int pos = solveOpt(arr);
         out.println(pos);
+    }
+
+    void runTests() {
+        int pos = solveOpt(new int[]{0, 0, 1});
+        out.println(pos == 0 ? "OK" : "ERROR");
+
+        pos = solveOpt(new int[]{1, 0, 0, 0, 0});
+        out.println(pos == 4 ? "OK" : "ERROR");
+
+        pos = solveOpt(new int[]{1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1});
+        out.println(pos == 7 ? "OK" : "ERROR");
+
+        pos = solveOpt(new int[]{1, 0, 0, 1, 1, 0, 1});
+        out.println(pos == 2 ? "OK" : "ERROR");
+
+        pos = solveOpt(new int[]{0, 0, 1, 0, 0, 0});
+        out.println(pos == 5 ? "OK" : "ERROR");
+
+        pos = solveOpt(new int[]{0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1});
+        out.println(pos == 13 ? "OK" : "ERROR");
+    }
+
+    // oneWasSeen - булевый признак, была ли уже 1 в ранее просмотренной части последовательности
+    // zeroCnt - в начале каждой итерации цикла равна длине накопленной последовательности из нулей,
+    // если ранее был хотя бы один или более последовательных нулей
+    // maxDist - текущее значение максимального расстояния от 0 до 1 в просмотренной ранее части
+    // pos - позиция нуля для которой было рассчитано maxDist
+    // в предыдущей реализации для случая 2-х позиций нуля посередине между единицами мы брали левую позицию,
+    // так как вычисляли как lastOnePos + dist, а здесь мы берем правую так как вычисляем как
+    // i - dist, поэтому хранить lastOnePos вместо булевого флага тоже имеет смысл - чтобы упростить вычисление
+    // середины
+    int solveOpt(int[] arr) {
+        boolean oneWasSeen = false;
+        int zeroCnt = 0, maxDist = 0, pos = -1;
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] == 0) {
+                zeroCnt++;
+            } else {
+                if (oneWasSeen) {
+                    int dist = (zeroCnt + 1)/2;
+                    if (dist > maxDist) {
+                        maxDist = dist;
+                        pos = i - dist;
+                    }
+                } else {
+                    maxDist = i;
+                    pos = 0;
+                    oneWasSeen = true;
+                }
+                zeroCnt = 0;
+            }
+        }
+        if (zeroCnt > maxDist)
+            pos = arr.length-1;
+        return pos;
     }
 
     int solve(int[] arr) {
