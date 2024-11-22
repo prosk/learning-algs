@@ -105,8 +105,9 @@ public class Woodpeckers {
         if (isolatedCnt > 0) {
             int slots = isolatedCnt;
             int delimiters = allLeftHouseCnt + allRightHouseCnt + 1;
-            int isolatedComb = binomCoeff(slots+delimiters, slots);
-            combForConnected = mult(combForConnected, isolatedComb);
+            int isolatedComb = binomCoeff(slots+delimiters, slots); // без учета порядка
+            int isolatedOrderedComb = mult(isolatedComb, getFactorial(slots));
+            combForConnected = mult(combForConnected, isolatedOrderedComb);
         }
         out.println(combForConnected);
     }
