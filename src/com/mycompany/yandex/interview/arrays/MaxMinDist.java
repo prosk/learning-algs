@@ -16,7 +16,7 @@ public class MaxMinDist {
 
     private final static Random rnd = new Random();
 
-    // чужое решение с Питона перевел на Джаву - оно не проходит все рандомные тесты
+    // чужое решение с Питона перевел на Джаву - оно проходит рандомные тесты
     int getMaxMinDistWithStack(int[] arr) {
         int ans = 0;
         int nShop = -arr.length;
@@ -29,7 +29,7 @@ public class MaxMinDist {
                     int candidate = steck.pop();
                     if (i - candidate > ans) {
                         if (i - candidate >= candidate - nShop) {
-                            ans = candidate - nShop;
+                            ans = Math.max(ans, candidate - nShop);
                             steck.clear();
                         } else {
                             ans = i - candidate;
@@ -183,8 +183,9 @@ print(find_max([int(x) for x in '011111111111']))  # 11
     }
 
     void testForRandomArrays() {
-        int testCount = 200, n = 12;
+        int testCount = 1200, n = 57;
         int successTestCnt = 0;
+        int errorTestCnt = 0;
         for(int i = 0; i < testCount; i++) {
             int[] arr = new int[n];
             boolean houses = false, shops = false;
@@ -204,11 +205,13 @@ print(find_max([int(x) for x in '011111111111']))  # 11
                     successTestCnt++;
                 } else {
                     System.out.println("ERROR BF ans = " + bfDist + " my ans = " + dist);
+                    errorTestCnt++;
                 }
             }
         }
         System.out.println("ALL TESTS " + testCount);
         System.out.println("SUCCESS TESTS " + successTestCnt);
+        System.out.println("TESTS WITH ERROR " + errorTestCnt);
     }
 
     void run() {
