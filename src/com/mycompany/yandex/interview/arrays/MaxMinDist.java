@@ -31,9 +31,9 @@ public class MaxMinDist {
                         if (i - candidate >= candidate - nShop) {
                             ans = candidate - nShop;
                             steck.clear();
+                        } else {
+                            ans = i - candidate;
                         }
-                    } else {
-                        ans = i - candidate;
                     }
                 }
                 nShop = i;
@@ -49,6 +49,9 @@ public class MaxMinDist {
      Решение на Питоне через стек
 
      # 1 - дом, 0 - магазин
+попробуйте такой тест [1, 0, 1, 0, 1, 1, 2, 2, 2, 1, 2, 1, 2, 1, 0],
+правильный ответ 5
+ERROR BF ans = 5 my ans = 2
 
 def find_max(a: list):
     max_ = 0
@@ -180,7 +183,7 @@ print(find_max([int(x) for x in '011111111111']))  # 11
     }
 
     void testForRandomArrays() {
-        int testCount = 100, n = 15;
+        int testCount = 200, n = 12;
         int successTestCnt = 0;
         for(int i = 0; i < testCount; i++) {
             int[] arr = new int[n];
@@ -200,7 +203,7 @@ print(find_max([int(x) for x in '011111111111']))  # 11
                     System.out.println("OK ans = " + dist);
                     successTestCnt++;
                 } else {
-                    System.out.println("OK BF ans = " + bfDist + " my ans = " + dist);
+                    System.out.println("ERROR BF ans = " + bfDist + " my ans = " + dist);
                 }
             }
         }
