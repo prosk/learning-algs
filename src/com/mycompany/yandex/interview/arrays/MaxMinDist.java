@@ -16,6 +16,67 @@ public class MaxMinDist {
 
     private final static Random rnd = new Random();
 
+    // чужое решение с Питона перевел на Джаву - оно не проходит все рандомные тесты
+    int getMaxMinDistWithStack(int[] arr) {
+        int ans = 0;
+        int nShop = -arr.length;
+        Stack<Integer> steck = new Stack<>();
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] == HOUSE.value && i - nShop > ans) {
+                steck.add(i);
+            } else if (arr[i] == SHOP.value) {
+                while (!steck.isEmpty()) {
+                    int candidate = steck.pop();
+                    if (i - candidate > ans) {
+                        if (i - candidate >= candidate - nShop) {
+                            ans = candidate - nShop;
+                            steck.clear();
+                        }
+                    } else {
+                        ans = i - candidate;
+                    }
+                }
+                nShop = i;
+            }
+        }
+        if (!steck.isEmpty()) {
+            ans = steck.pop() - nShop;
+        }
+        return ans;
+    }
+
+    /*
+     Решение на Питоне через стек
+
+     # 1 - дом, 0 - магазин
+
+def find_max(a: list):
+    max_ = 0
+    n_shop = -len(a)
+    steck = []
+    for i in range(len(a)):
+        if a[i] == 1 and i - n_shop > max_:
+            steck.append(i)
+        elif a[i] == 0:
+            while steck:
+                candidate = steck.pop()
+                if i - candidate > max_:
+                    if i - candidate >= candidate - n_shop:
+                        max_ = candidate - n_shop
+                        steck.clear()
+                    else:
+                        max_ = i - candidate
+            n_shop = i
+    if steck:
+        max_ = steck.pop() - n_shop
+    return max_
+
+
+print(find_max([int(x) for x in '1110111111111110111']))  #6
+print(find_max([int(x) for x in '011111111111']))  # 11
+
+     */
+
     public static void main(String[] args) {
         // new MaxMinDist().runTests();
         new MaxMinDist().testForRandomArrays();
@@ -119,7 +180,7 @@ public class MaxMinDist {
     }
 
     void testForRandomArrays() {
-        int testCount = 300, n = 100;
+        int testCount = 100, n = 15;
         int successTestCnt = 0;
         for(int i = 0; i < testCount; i++) {
             int[] arr = new int[n];
@@ -134,7 +195,7 @@ public class MaxMinDist {
                 System.out.println("Test " + i);
                 System.out.println(Arrays.toString(arr));
                 int bfDist = getMaxMinDistBF(arr);
-                int dist = getMaxMinDist(arr);
+                int dist = getMaxMinDistWithStack(arr); // getMaxMinDist(arr);
                 if (bfDist == dist) {
                     System.out.println("OK ans = " + dist);
                     successTestCnt++;
