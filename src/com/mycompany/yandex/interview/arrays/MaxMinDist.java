@@ -157,6 +157,35 @@ print(find_max([int(x) for x in '011111111111']))  # 11
         return ans;
     }
 
+    int getMaxMinDistTwoPointers(int[] arr) {
+        int m1 = -100500;
+        int maximum = 0;
+        for(int i = 0; i < arr.length; i++) {
+            while(i < arr.length && arr[i] != HOUSE.value) {
+                if (arr[i] == SHOP.value) {
+                    m1 = i;
+                }
+                i++;
+            }
+
+            while(i < arr.length && arr[i] != SHOP.value) i++;
+            int m2 = i;
+
+            if (m2 == arr.length) {
+                m2 = 100500;
+            }
+
+            for(int t = Math.max(m1+1, 0); t < Math.min(m2, arr.length); t++) {
+                if (arr[t] == HOUSE.value) {
+                    maximum = Math.max(maximum, Math.min(t-m1, m2-t));
+                }
+            }
+
+            m1 = m2;
+        }
+        return maximum;
+    }
+
     int getMaxMinDistBF(int[] arr) {
         int ans = 0;
         for(int i = 0; i < arr.length; i++) {
@@ -183,7 +212,7 @@ print(find_max([int(x) for x in '011111111111']))  # 11
     }
 
     void testForRandomArrays() {
-        int testCount = 1200, n = 57;
+        int testCount = 1200, n = 70;
         int successTestCnt = 0;
         int errorTestCnt = 0;
         for(int i = 0; i < testCount; i++) {
@@ -199,7 +228,7 @@ print(find_max([int(x) for x in '011111111111']))  # 11
                 System.out.println("Test " + i);
                 System.out.println(Arrays.toString(arr));
                 int bfDist = getMaxMinDistBF(arr);
-                int dist = getMaxMinDistWithStack(arr); // getMaxMinDist(arr);
+                int dist = getMaxMinDistTwoPointers(arr); // getMaxMinDist(arr);
                 if (bfDist == dist) {
                     System.out.println("OK ans = " + dist);
                     successTestCnt++;
