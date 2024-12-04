@@ -81,8 +81,8 @@ print(find_max([int(x) for x in '011111111111']))  # 11
      */
 
     public static void main(String[] args) {
-        // new MaxMinDist().runTests();
-        new MaxMinDist().testForRandomArrays();
+        new MaxMinDist().runTests();
+        // new MaxMinDist().testForRandomArrays();
         out.close();
     }
 
@@ -103,6 +103,9 @@ print(find_max([int(x) for x in '011111111111']))  # 11
         out.println(dist == 8 ? "OK" : "ERROR " + dist);
 
         dist = getMaxMinDist(new int[]{1, 0, 0, 2, 1, 1, 0, 0, 0, 2, 1, 1, 0, 0, 0, 1, 0, 2, 0, 0, 1  });
+        out.println(dist == 4 ? "OK" : "ERROR " + dist);
+
+        dist = getMaxMinDistTwoPointers(new int[]{1, 0, 0, 2, 1, 1, 0, 0, 0, 2, 1, 1, 0, 0, 0, 1, 0, 2, 0, 0, 1  });
         out.println(dist == 4 ? "OK" : "ERROR " + dist);
     }
 
