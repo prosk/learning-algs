@@ -29,14 +29,14 @@ public class MergeIntervals {
 
     public static void main(String[] args) {
         int[][] test1 = {{1,3}, {2,6},{8,10},{15,18} };
-        int[][] ans = merge(test1);
+        int[][] ans = mergeBtfl(test1);
         System.out.println("Test1");
         for(int i = 0; i < ans.length; i++) {
             System.out.println(Arrays.toString(ans[i]));
         }
 
         int[][] test2 = {{1,4}, {4,5} };
-        ans = merge(test2);
+        ans = mergeBtfl(test2);
         System.out.println("Test2");
         for(int i = 0; i < ans.length; i++) {
             System.out.println(Arrays.toString(ans[i]));
@@ -59,7 +59,7 @@ public class MergeIntervals {
         }
     }
 
-    public static int[][] merge(int[][] intervals) {
+    public static int[][] mergeBtfl(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
         List<int[]> merged = new ArrayList<>();
