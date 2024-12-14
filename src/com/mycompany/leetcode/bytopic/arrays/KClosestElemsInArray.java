@@ -171,6 +171,21 @@ public class KClosestElemsInArray {
     // editorial clever solution with custom binary search and best complexity
     // -------------------------------------------------------------------------
 
+    /*
+
+    Let's consider two indices at each binary search operation, the usual mid, and some index mid + k.
+    The relationship between these indices is significant because only one of them could possibly
+    be in a final answer. For example, if mid = 2, and k = 3, then arr[2] and arr[5] could not possibly
+    both be in the answer, since that would require taking 4 elements [arr[2], arr[3], arr[4], arr[5]].
+
+    This leads us to the question: how do we move our pointers left and right?
+    If the element at arr[mid] is closer to x than arr[mid + k], then that means arr[mid + k],
+    as well as every element to the right of it can never be in the answer.
+    This means we should move our right pointer to avoid considering them. The logic is the same vice-versa -
+    if arr[mid + k] is closer to x, then move the left pointer.
+
+     */
+
     public List<Integer> findClosestElementsBtfl(int[] arr, int k, int x) {
         // Initialize binary search bounds
         int left = 0;
