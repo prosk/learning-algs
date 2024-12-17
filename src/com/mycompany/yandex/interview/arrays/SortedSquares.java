@@ -47,6 +47,8 @@ public class SortedSquares {
         System.out.println(Arrays.toString(ans8));
     }
 
+    // простое решение - идем от от больших квадратов к меньшим
+    // если в массиве только отрицательные или только положительные числа это тоже будет работать
     public int[] getSortedSquaresOpt(int[] arr) {
         int i = 0, j = arr.length - 1;
         int[] res = new int[arr.length];
@@ -62,6 +64,9 @@ public class SortedSquares {
         return res;
     }
 
+    // первое решение которое пришло в голову - найти границу между <0 и >=0, и далее от этой границы двигаться влево и вправо
+    // в принципе решение ОК, но если подумать что можно идти от больших квадратов к меньшим - тогда решение получается
+    // намного проще
     public int[] getSortedSquares(int[] arr) {
         int[] squares = new int[arr.length];
         int midIndex = getMidIndex(arr);
