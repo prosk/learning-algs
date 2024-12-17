@@ -1,6 +1,8 @@
 package com.mycompany.yandex.interview.arrays;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /*
  Дан массив целых чисел длиной N, массив упорядочен по возрастанию
@@ -13,36 +15,51 @@ public class SortedSquares {
     public static void main(String[] args) {
         SortedSquares sq = new SortedSquares();
         int[] test1 = {-3, 2, 4};
-        int[] ans = sq.getSortedSquares(test1);
+        int[] ans = sq.getSortedSquaresOpt(test1);
         System.out.println(Arrays.toString(ans));
 
         int[] test2 = {-5, -3, -1, 0, 0, 2, 4};
-        int[] ans2 = sq.getSortedSquares(test2);
+        int[] ans2 = sq.getSortedSquaresOpt(test2);
         System.out.println(Arrays.toString(ans2));
 
         int[] test3 = {-5};
-        int[] ans3 = sq.getSortedSquares(test3);
+        int[] ans3 = sq.getSortedSquaresOpt(test3);
         System.out.println(Arrays.toString(ans3));
 
         int[] test4 = {50};
-        int[] ans4 = sq.getSortedSquares(test4);
+        int[] ans4 = sq.getSortedSquaresOpt(test4);
         System.out.println(Arrays.toString(ans4));
 
         int[] test5 = {};
-        int[] ans5 = sq.getSortedSquares(test5);
+        int[] ans5 = sq.getSortedSquaresOpt(test5);
         System.out.println(Arrays.toString(ans5));
 
         int[] test6 = {-5, -4, -2};
-        int[] ans6 = sq.getSortedSquares(test6);
+        int[] ans6 = sq.getSortedSquaresOpt(test6);
         System.out.println(Arrays.toString(ans6));
 
         int[] test7 = {5, 10, 20};
-        int[] ans7 = sq.getSortedSquares(test7);
+        int[] ans7 = sq.getSortedSquaresOpt(test7);
         System.out.println(Arrays.toString(ans7));
 
         int[] test8 = {-10, -10, -10, 0, 0, 0, 5, 5, 5};
-        int[] ans8 = sq.getSortedSquares(test8);
+        int[] ans8 = sq.getSortedSquaresOpt(test8);
         System.out.println(Arrays.toString(ans8));
+    }
+
+    public int[] getSortedSquaresOpt(int[] arr) {
+        int i = 0, j = arr.length - 1;
+        int[] res = new int[arr.length];
+        for(int k = arr.length - 1; k >= 0; k--) {
+            if (Math.abs(arr[i]) > Math.abs(arr[j])) {
+                res[k] = arr[i]*arr[i];
+                i++;
+            } else {
+                res[k] = arr[j]*arr[j];
+                j--;
+            }
+        }
+        return res;
     }
 
     public int[] getSortedSquares(int[] arr) {
