@@ -1,0 +1,83 @@
+package com.mycompany.yandex.interview.arrays;
+
+import java.util.Arrays;
+
+/*
+ Дан массив целых чисел длиной N, массив упорядочен по возрастанию
+ Написать функцию, которая из этого массива получит массив квадратов чисел,
+ отсортированный по возрастанию
+ Итоговая асимптотика равна O(log(N) + N) = O(N)
+ */
+public class SortedSquares {
+
+    public static void main(String[] args) {
+        SortedSquares sq = new SortedSquares();
+        int[] test1 = {-3, 2, 4};
+        int[] ans = sq.getSortedSquares(test1);
+        System.out.println(Arrays.toString(ans));
+
+        int[] test2 = {-5, -3, -1, 0, 0, 2, 4};
+        int[] ans2 = sq.getSortedSquares(test2);
+        System.out.println(Arrays.toString(ans2));
+
+        int[] test3 = {-5};
+        int[] ans3 = sq.getSortedSquares(test3);
+        System.out.println(Arrays.toString(ans3));
+
+        int[] test4 = {50};
+        int[] ans4 = sq.getSortedSquares(test4);
+        System.out.println(Arrays.toString(ans4));
+
+        int[] test5 = {};
+        int[] ans5 = sq.getSortedSquares(test5);
+        System.out.println(Arrays.toString(ans5));
+
+        int[] test6 = {-5, -4, -2};
+        int[] ans6 = sq.getSortedSquares(test6);
+        System.out.println(Arrays.toString(ans6));
+
+        int[] test7 = {5, 10, 20};
+        int[] ans7 = sq.getSortedSquares(test7);
+        System.out.println(Arrays.toString(ans7));
+
+        int[] test8 = {-10, -10, -10, 0, 0, 0, 5, 5, 5};
+        int[] ans8 = sq.getSortedSquares(test8);
+        System.out.println(Arrays.toString(ans8));
+    }
+
+    public int[] getSortedSquares(int[] arr) {
+        int[] squares = new int[arr.length];
+        int midIndex = getMidIndex(arr);
+        int right = (midIndex == -1) ? arr.length : midIndex;
+        int left = right - 1, square = 0;
+        for(int i = 0; i < arr.length; i++) {
+            int rightVal = (right == arr.length) ? Integer.MAX_VALUE : arr[right];
+            int leftVal = (left < 0) ? Integer.MAX_VALUE : Math.abs(arr[left]);
+            if (rightVal <= leftVal) {
+                square = rightVal*rightVal;
+                right++;
+            } else {
+                square = leftVal*leftVal;
+                left--;
+            }
+            squares[i] = square;
+        }
+        return squares;
+    }
+
+    // min i such than arr[i] >= 0
+    private int getMidIndex(int[] arr) {
+        int ans = -1;
+        int l = 0, r = arr.length - 1;
+        while(l <= r) {
+            int mid = l + (r - l)/2;
+            if (arr[mid] >= 0) {
+                ans = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
