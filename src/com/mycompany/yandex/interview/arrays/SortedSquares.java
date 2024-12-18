@@ -10,6 +10,9 @@ import java.util.List;
  отсортированный по возрастанию
  Итоговая асимптотика равна O(log(N) + N) = O(N)
  */
+
+// leetcode 977
+// https://leetcode.com/problems/squares-of-a-sorted-array/
 public class SortedSquares {
 
     public static void main(String[] args) {
