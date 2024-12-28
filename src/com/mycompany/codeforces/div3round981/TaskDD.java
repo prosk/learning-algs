@@ -82,24 +82,50 @@ public class TaskDD {
                     return ans;
                }
 
+               Еще одно лаконичное
+               void solve(){
+                    ll n;
+                    cin >> n;
+                    vl v(n);
+                    f(i, 0, n)
+                        cin >> v[i];
+                    map<ll, ll> mp;
+                    mp[0] = 0;
+                    ll sum = 0, ans = 0;
+                    f(i, 0, n){
+                        sum += v[i];
+                        auto it = mp.find(sum);
+                        if(it == mp.end()){
+                            mp[sum] = i;
+                            continue;
+                        }
+                        ++ans;
+                        mp.clear();
+                        mp[sum] = i;
+                    }
+                    cout << ans << "\n";
+}
+
      */
 
     void solve() {
         int n = readInt();
         int[] arr = new int[n];
-        int[] pref = new int[n+1];
+        long[] pref = new long[n+1];
         for(int i = 0; i < n; i++) {
             arr[i] = readInt();
             pref[i+1] = pref[i] + arr[i];
         }
 
-        Set<Integer> hs = new HashSet<>();
-        hs.add(0);
+        Set<Long> hs = new HashSet<>();
+        hs.add(0L);
         int ans = 0;
         for(int i = 0; i < n; i++) {
             if (hs.contains(pref[i+1])) {
                 ans++;
-                hs.clear();
+                // hs.clear(); too slow due to O(n) time complexity
+                hs = new HashSet<>();
+                hs.add(pref[i+1]);
             } else {
                 hs.add(pref[i+1]);
             }
