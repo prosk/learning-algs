@@ -70,4 +70,35 @@ public class LongestSubarrayOfOnes {
 
         return longestWindow;
     }
+
+    // решение на основе ДП без 2-х указателей
+    /*
+        Это, фактически, динамическое программирование. Но можно о нем рассуждать и не зная ДП.
+        F(i,k) — максимальная длина из '1' в конце списка из первых i элементов, если оттуда удалить k элементов.
+        Для k=0, оно считается в currentOnes.
+        При k=1, оно считается в currentResult и там выбираются 2 варианта
+        — или элемент удален раньше (currentResult + 1) или удаляется последний элемент (currentOnes).
+     */
+
+    public int longestSubarrayDpBtfl(int[] nums) {
+        // Max sequence of 1s at the end of processed list.
+        int currentOnes = 0;
+        // Max sequence of 1s at the end of processed list,
+        // if exactly one element is removed.
+        int currentResult = -1;
+        int result = 0;
+        for(int e: nums) {
+            if (e == 1) {
+                currentResult = Math.max(currentResult + 1, currentOnes);
+                currentOnes++;
+            } else {
+                currentResult = currentOnes;
+                currentOnes = 0;
+            }
+            if (currentResult > result)
+                result = currentResult;
+        }
+        return result;
+    }
+
 }
