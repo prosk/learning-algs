@@ -1,5 +1,11 @@
 package com.mycompany.leetcode.bytopic.linkedlists;
 
+// 234. Palindrome Linked List
+// https://leetcode.com/problems/palindrome-linked-list/description/
+/*
+Given the head of a singly linked list, return true if it is a
+palindrome or false otherwise.
+ */
 public class PalindromeLinkedList {
 
     public static void main(String[] args) {
