@@ -6,7 +6,7 @@ public class PalindromeLinkedList {
         PalindromeLinkedList runner = new PalindromeLinkedList();
         int[] arr1 = {1, 2, 5, 7, 7, 5, 2, 1};
         int[] arr2 = {1, 2, 5, 2, 1};
-        int[] arr3 = {1, 20, 50, 2, 1};
+        int[] arr3 = {1};
         ListNode list1 = ListNode.valueOf(arr1);
         ListNode list2 = ListNode.valueOf(arr2);
         ListNode list3 = ListNode.valueOf(arr3);
@@ -73,9 +73,12 @@ public class PalindromeLinkedList {
     // my solution with the same idea as in the best solution from editorial
     // ***********************************************************************
     public boolean isPalindrome(ListNode head) {
-        if (head.next == null) {
+
+        // проверка не нужна так как код корректно работает для списка из 1-го элемента
+        /*if (head.next == null) {
             return true;
-        }
+        }*/
+
         ListNode slow = head, fast = head;
         int len = 1;
         while(fast.next != null) {
