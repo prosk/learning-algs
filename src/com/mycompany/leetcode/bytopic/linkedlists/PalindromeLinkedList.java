@@ -11,6 +11,7 @@ public class PalindromeLinkedList {
         ListNode list2 = ListNode.valueOf(arr2);
         ListNode list3 = ListNode.valueOf(arr3);
         // test ed solution
+        System.out.println("Editorial solution");
         boolean ans1 = runner.isPalindromeEd(list1);
         System.out.println(ans1);
         System.out.println(list1);
@@ -24,6 +25,7 @@ public class PalindromeLinkedList {
         System.out.println(list3);
 
         // test my solution
+        System.out.println("My solution");
         ans1 = runner.isPalindrome(list1);
         System.out.println(ans1);
         System.out.println(list1);
@@ -139,7 +141,8 @@ public class PalindromeLinkedList {
         }
 
         // Restore the list and return the result.
-        firstHalfEnd.next = reverseList(secondHalfStart);
+        //firstHalfEnd.next = reverseList(secondHalfStart);
+        reverseList(secondHalfStart);
         return result;
     }
 
