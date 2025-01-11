@@ -10,9 +10,17 @@ public class PalindromeLinkedList {
         ListNode list1 = ListNode.valueOf(arr1);
         ListNode list2 = ListNode.valueOf(arr2);
         ListNode list3 = ListNode.valueOf(arr3);
+
+        // test printing
+        System.out.println("Print in order");
+        System.out.println(list1);
+        System.out.println("Print reverse");
+        ListNode.printValuesReverse(list1);
+        System.out.println();
+
         // test ed solution
         System.out.println("Editorial solution");
-        boolean ans1 = runner.isPalindromeEd(list1);
+        boolean ans1 = runner.isPalindromeBtfl(list1);
         System.out.println(ans1);
         System.out.println(list1);
 
@@ -46,6 +54,13 @@ public class PalindromeLinkedList {
         ListNode() {}
         ListNode(int val) { this.val = val; }
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        public static void printValuesReverse(ListNode node) {
+            if (node != null) {
+                printValuesReverse(node.next);
+                System.out.print(" " + node.val + " ") ;
+            }
+        }
 
         public static ListNode valueOf(int[] arr) {
             ListNode prev = null;
@@ -167,5 +182,25 @@ public class PalindromeLinkedList {
             slow = slow.next;
         }
         return slow;
+    }
+
+    // ***********************************************************************
+    // smart recursive solution from editorial
+    // ***********************************************************************
+
+    private ListNode frontPointer;
+
+    private boolean recursivelyCheck(ListNode currentNode) {
+        if (currentNode != null) {
+            if (!recursivelyCheck(currentNode.next)) return false;
+            if (currentNode.val != frontPointer.val) return false;
+            frontPointer = frontPointer.next;
+        }
+        return true;
+    }
+
+    public boolean isPalindromeBtfl(ListNode head) {
+        frontPointer = head;
+        return recursivelyCheck(head);
     }
 }
