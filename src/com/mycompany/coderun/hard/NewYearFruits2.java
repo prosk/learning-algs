@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.*;
 
+// https://coderun.yandex.ru/selections/new-year-adventures/problems/new-year-fruits-2/description
 public class NewYearFruits2 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
