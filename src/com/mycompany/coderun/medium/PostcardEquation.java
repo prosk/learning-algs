@@ -20,6 +20,10 @@ public class PostcardEquation {
 
     void run() {
         long n = readLong();
+        if (n == 1) {
+            out.println(1);
+            return;
+        }
         int ans = 0;
         for(int k = 1; k <= 11 && (n-k) > 0; k++) {
             long curr = n - k;
