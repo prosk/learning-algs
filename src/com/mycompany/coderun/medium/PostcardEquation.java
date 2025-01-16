@@ -103,6 +103,28 @@ public class PostcardEquation {
         return primes;
     }
 
+    // correct way to find prime factors
+    /*
+        similar C++ implementation from https://cp-algorithms.com/algebra/factorization.html
+
+        vector<long long> trial_division2(long long n) {
+            vector<long long> factorization;
+            while (n % 2 == 0) {
+                factorization.push_back(2);
+                n /= 2;
+            }
+            for (long long d = 3; d * d <= n; d += 2) {
+                while (n % d == 0) {
+                    factorization.push_back(d);
+                    n /= d;
+                }
+            }
+            if (n > 1)
+                factorization.push_back(n);
+            return factorization;
+        }
+
+     */
     private static List<Long> findPrimeFactors(long n) {
         List<Long> primes = new ArrayList<>();
         if (n % 2 == 0) {
@@ -110,13 +132,15 @@ public class PostcardEquation {
             while (n % 2 == 0)
                 n >>= 1;
         }
-        for (long i = 3; n > 1; i += 2) {
+        for (long i = 3; n > 1 && i*i <= n; i += 2) {
             if (n % i == 0) {
                 primes.add(i);
                 while (n % i == 0)
                     n /= i;
             }
         }
+        if (n > 1)
+            primes.add(n);
         return primes;
     }
 }
