@@ -94,6 +94,25 @@ public class SumOfOddLengthSubarrays {
         Instead of finding all odd-length subarrays, we can count the number of occurrences
         of each integer in all odd-length subarrays. For example, if arr[i]
         has appeared k times, it contributes to the total sum by arr[i] * k.
+
+        Let's find the pattern behind this: since the current subarray containing arr[i] has an odd-length,
+        the number of elements without arr[i] must be even, indicating the number of elements
+        to the left and right side of arr[i] must be both even or both odd
+
+        even left and even right
+               X
+           L L X R R
+       L L L L X R R R R
+
+       odd left and odd right
+             L X R
+         L L L X R R R
+     L L L L L X R R R R R
+
+     if we have a segment of length = LEN (to the left or to the right side) then
+     count of subsegments with Even count of elems = (LEN/2 + 1)
+     count of subsegments with Odd count of elems = (LEN + 1)/2
+
      */
 
     public int sumOddLengthSubarraysEdBtfl(int[] arr) {
@@ -101,8 +120,8 @@ public class SumOfOddLengthSubarrays {
 
         for (int i = 0; i < n; ++i) {
             int left = i, right = n - i - 1;
-            answer += arr[i] * (left / 2 + 1) * (right / 2 + 1);
-            answer += arr[i] * ((left + 1) / 2) * ((right + 1) / 2);
+            answer += arr[i] * (left / 2 + 1) * (right / 2 + 1); // even elems left AND even elems right
+            answer += arr[i] * ((left + 1) / 2) * ((right + 1) / 2); // odd elems left AND odd elems right
         }
 
         return answer;
