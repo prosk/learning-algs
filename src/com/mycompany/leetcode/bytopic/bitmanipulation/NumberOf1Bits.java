@@ -6,8 +6,9 @@ package com.mycompany.leetcode.bytopic.bitmanipulation;
 public class NumberOf1Bits {
 
     public static void main(String[] args) {
-        System.out.println("-8 = " + Integer.toBinaryString(-8));
-        System.out.println("-9 = " + Integer.toBinaryString(-9));
+        System.out.println("-8 =  " + Integer.toBinaryString(-8));
+        System.out.println("-9 =  " + Integer.toBinaryString(-9));
+        System.out.println("-10 = " + Integer.toBinaryString(-10));
 
         //System.out.println(get1BitsCnt(11));
         System.out.println(get1BitsCnt(-4569234));
