@@ -1,4 +1,4 @@
-package com.mycompany.codeforces.cp31sheet;
+package com.mycompany.codeforces.cp31sheet.rating800;
 
 import java.io.BufferedReader;
 import java.io.IOException;

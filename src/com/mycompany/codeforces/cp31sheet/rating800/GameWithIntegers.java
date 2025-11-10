@@ -1,4 +1,4 @@
-package com.mycompany.codeforces.cp31sheet;
+package com.mycompany.codeforces.cp31sheet.rating800;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-public class JaggedSwaps {
+public class GameWithIntegers {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
     static StringTokenizer tok = new StringTokenizer("");
 
     public static void main(String[] args) {
-        new JaggedSwaps().run();
+        new GameWithIntegers().run();
         out.close();
     }
 
@@ -20,9 +20,7 @@ public class JaggedSwaps {
         int t = readInt();
         while(t-- > 0) {
             int n = readInt();
-            int[] arr = new int[n];
-            for(int i = 0; i < n; i++) arr[i] = readInt();
-            out.println(arr[0] == 1 ? "YES" : "NO");
+            out.println(n % 3 == 0 ? "Second" : "First");
         }
     }
 
