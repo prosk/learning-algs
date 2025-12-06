@@ -9,6 +9,7 @@ public class LambdaIdentity {
         Function<?, ?>[] labmdas = new Function<?, ?>[CNT];
 
         for(int i = 0; i < CNT; i++) {
+            //int n = 25;
             labmdas[i] = (Function<Integer, Integer>) (Integer a) -> a + 10;
             System.out.println(labmdas[i] + " of class " + labmdas[i].getClass());
         }
@@ -23,5 +24,8 @@ public class LambdaIdentity {
         System.out.println(plusFive + " of class " + plusFive.getClass());
         System.out.println("plusFive hashCode = " + plusFive.hashCode());
         System.out.println(labmdas[0].equals(plusTen));
+
+        int res = ((Function<Integer, Integer>) labmdas[0]).apply(25);
+        System.out.println("res = " + res);
     }
 }
