@@ -23,6 +23,20 @@ public class BlackslexAndPenguinCivilization {
         }
     }
 
+    /*
+    implementation in python which is identical to mine
+        t = int(input())
+        for _ in range(t):
+            n = int(input())
+            print(2**n - 1, end = ' ')
+            for i in range(1, n+1):
+                for j in range(0, 2**i, 2):
+                    print(j*2**(n-i) + 2**(n-i) - 1, end = ' ')
+            print()
+
+      In my implementation: k = i in Python, elem = j in Python
+     */
+
     void solve() {
         int n = readInt();
         // solution
