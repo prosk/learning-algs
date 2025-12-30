@@ -25,6 +25,7 @@ public class ProductionOfSnowmen {
 
     void solve() {
         int n = readInt();
+        long nLong = n;
         int MAX = 3*n;
 
         int[] a = new int[n];
@@ -52,32 +53,39 @@ public class ProductionOfSnowmen {
         }
 
         if (maxA < minB && maxB < minC) {
-            out.println(n*n*n);
+            out.println(nLong*nLong*nLong);
             return;
         }
-        int bShiftedCnt = 0;
+        long aCnt = 0, bCnt = 0;
         for(int startPosInB = 0; startPosInB < n; startPosInB++) {
-            if (checkForShiftedB(a, b, c, startPosInB)) {
-                bShiftedCnt++;
-            }
+            boolean[] checkRes = checkForShiftedB(a, b, c, startPosInB);
+            aCnt += checkRes[0] ? 1 : 0;
+            bCnt += checkRes[1] ? 1 : 0;
         }
-        int mult = (maxA < minB || maxB < minC) ? n*n : n;
-        int ans = bShiftedCnt * mult;
+        long acMult = aCnt * bCnt;
+        //int mult = (maxA < minB || maxB < minC) ? n*n : n;
+        //int ans = bShiftedCnt * mult;
+
+        long ans = nLong * acMult;
         out.println(ans);
     }
 
-    boolean checkForShiftedB(int[] a, int[] b, int[] c, int startPosInB) {
+    boolean[] checkForShiftedB(int[] a, int[] b, int[] c, int startPosInB) {
         int indB = startPosInB;
-        int n = a.length, cnt = 0;
+        int n = a.length, cntA = 0, cntB = 0;
         for(int i = 0; i < n; i++) {
-            if (a[i] < b[indB] && b[indB] < c[i]) {
-                cnt++;
-            } else {
-                return false;
+            if (a[i] >= b[indB] && b[indB] >= c[i]) {
+                break;
+            }
+            if (a[i] < b[indB]) {
+                cntA++;
+            }
+            if (b[indB] < c[i]) {
+                cntB++;
             }
             indB = (indB + 1) % n;
         }
-        return true;
+        return new boolean[] {cntA == n, cntB == n};
     }
 
     int readInt() {
