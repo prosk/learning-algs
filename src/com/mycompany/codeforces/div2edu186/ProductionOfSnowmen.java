@@ -6,6 +6,33 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+/*
+  Example of a clean solution in C++ from ksun48
+
+  The approach is the same as in my solution
+
+  void solve(){
+	int N;
+	cin >> N;
+	vector<vector<int> > S(3, vector<int>(N));
+	for(auto& x : S) for(auto& y : x) cin >> y;
+	int64_t ans = N;
+	for(int i = 0; i < 2; i++){
+		int cnt = 0;
+		for(int l = 0; l < N; l++){
+			int ok = 1;
+			for(int a = 0; a < N; a++){
+				if(S[i][a] >= S[i+1][(a+l) % N]) ok = 0;
+			}
+			cnt += ok;
+		}
+		ans *= cnt;
+	}
+	cout << ans << '\n';
+}
+
+ */
+
 public class ProductionOfSnowmen {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
