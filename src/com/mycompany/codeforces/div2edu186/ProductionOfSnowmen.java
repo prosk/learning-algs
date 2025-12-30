@@ -19,7 +19,7 @@ public class ProductionOfSnowmen {
     void run() {
         int t = readInt();
         while (t-- > 0) {
-            solve();
+            cleanSolve();
         }
     }
 
@@ -68,6 +68,29 @@ public class ProductionOfSnowmen {
 
         long ans = nLong * acMult;
         out.println(ans);
+    }
+
+    void cleanSolve() {
+        int n = readInt();
+        int[] a = readArray(n);
+        int[] b = readArray(n);
+        int[] c = readArray(n);
+        long aCnt = 0, bCnt = 0;
+        for(int startPosInB = 0; startPosInB < n; startPosInB++) {
+            boolean[] checkRes = checkForShiftedB(a, b, c, startPosInB);
+            aCnt += checkRes[0] ? 1 : 0;
+            bCnt += checkRes[1] ? 1 : 0;
+        }
+        long ans = n * aCnt * bCnt;
+        out.println(ans);
+    }
+
+    int[] readArray(int n) {
+        int[] arr = new int[n];
+        for(int i = 0; i < n; i++) {
+            arr[i] = readInt();
+        }
+        return arr;
     }
 
     boolean[] checkForShiftedB(int[] a, int[] b, int[] c, int startPosInB) {
