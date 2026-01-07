@@ -6,6 +6,27 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+/*
+      -- Очень красивое решение от Ormlis (Легендарный гроссмейстер, Федор Ромашов, Россия, Барнаул)
+
+      #define rep(i, n) for (int i = 0; i < (n); ++i)
+      using vi = vector<int>;
+
+      void solve() {
+        int n; cin >> n;
+        int k; cin >> k;
+        vi a(n + 1);
+        rep(i, n) {
+            int x; cin >> x;
+            a[x] = 1;
+        }
+        int r = 0;
+        while (r < k - 1 && a[r]) r++;
+        cout << r << '\n';
+    }
+
+ */
+
 public class YetAnotherMexTask {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
