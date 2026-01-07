@@ -6,6 +6,30 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
+/*
+  solution from Ormlis
+
+          #define rep(i, n) for (int i = 0; i < (n); ++i)
+          #define all(a) (a).begin(), (a).end()
+          using vi = vector<int>;
+
+          void solve() {
+            int n; cin >> n;
+            vi a(n);
+            rep(i, n) cin >> a[i];
+            if (count(all(a), 0) == 0) {
+                cout << "Alice\n";
+                return;
+            }
+            if (a[0] == 1 || a[n - 1] == 1) {
+                cout << "Alice\n";
+                return;
+            }
+            cout << "Bob\n";
+        }
+
+ */
+
 public class AliceBobGame {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static PrintWriter out = new PrintWriter(System.out);
