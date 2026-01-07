@@ -7,6 +7,27 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 /*
+  Tutotial:
+
+  Hint 1:
+  Considering that in the end only k−1 numbers will remain, which numbers in an interval of length k are invalid?
+
+  Hint 2:
+  Consider the Pigeonhole Principle.
+
+  Solution:
+
+  Since only k−1 numbers will remain in the end, it is relatively easy to notice that for any interval of length k,
+  numbers within this interval that are greater than or equal to k−1 or have duplicate values are invalid.
+  One of these two types of numbers can be removed. Since there are only k−1 numbers from 0 to k−2,
+  in any interval of length k, there must be at least one number that can be deleted.
+  Therefore, the answer is min(mex(a),k−1).
+
+  Time complexity: O(∑n).
+
+ */
+
+/*
       -- Очень красивое решение от Ormlis (Легендарный гроссмейстер, Федор Ромашов, Россия, Барнаул)
 
       #define rep(i, n) for (int i = 0; i < (n); ++i)
