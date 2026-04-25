@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// разбор на neetcode: https://neetcode.io/solutions/find-k-closest-elements
 public class KClosestElemsInArray {
 
     /*
