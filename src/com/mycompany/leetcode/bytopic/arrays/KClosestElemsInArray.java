@@ -1,8 +1,6 @@
 package com.mycompany.leetcode.bytopic.arrays;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 // разбор на neetcode: https://neetcode.io/solutions/find-k-closest-elements
 public class KClosestElemsInArray {
@@ -30,6 +28,8 @@ public class KClosestElemsInArray {
 
         List<Integer> ans1 = findClosestElementsBtfl(test2, 3, 10);
         System.out.println(ans1);
+
+        testBinSearch(500, 120, 1000);
     }
 
     // -------------------------------------------------------------------------
@@ -72,7 +72,12 @@ public class KClosestElemsInArray {
         return ans;
     }
 
-    // return first elem >= k
+    // [l][m][][r]   => [l = r = m],  [l][r]
+    // [l][m][r]     => [l = r = m],  [l = r = m]
+    // [l=m][r]      => EXIT (r=m-1), [l = r = m]
+    // [l = r = m]   => EXIT (r=m-1), EXIT (l=m+1)
+
+    // return first (most left) elem >= k
     private static int getFirstInd(int[] arr, int val) {
         int ans = -1;
         int l = 0, r = arr.length - 1;
@@ -86,6 +91,57 @@ public class KClosestElemsInArray {
             }
         }
         return ans;
+    }
+
+    private static int getFirstIndUsual(int[] arr, int val) {
+        int ans = arr.length - 1;
+        int l = 0, r = arr.length - 1;
+        while(l <= r) {
+            int mid = l + (r - l)/2;
+            if (arr[mid] >= val) {
+                ans = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    // эквивалентная getFirstIndUsual реализация, но с условием l < r и без дополнительной переменной ans
+    // return first (most left) elem >= k
+    private static int getFirstIndBtfl(int[] arr, int val) {
+        int l = 0, r = arr.length - 1;
+        while(l < r) {
+            int mid = l + (r - l)/2;
+            if (arr[mid] >= val) {
+                r = mid; // оставляем mid внутри отрезка [l;r], так как значение, которое нам нужно
+            } else {
+                l = mid + 1; // строго меньшие нам неинтересны, поэтому сдвигаем на следующий mid + 1
+            }
+        }
+        return l; // здесь l = r, поэтому неважно что тут вернуть, но l выглядит красивее
+    }
+
+    private static void testBinSearch(int testCnt, int len, int maxVal) {
+        Random rand = new Random();
+        boolean isOk = true;
+        while(testCnt-- > 0) {
+            int[] randomArray = new Random().ints(len, 100, maxVal).toArray();
+            Arrays.sort(randomArray);
+            int randomVal = rand.nextInt(maxVal+100);
+            int ans1 = getFirstIndUsual(randomArray, randomVal);
+            int ans2 = getFirstIndBtfl(randomArray, randomVal);
+            if (ans1 != ans2) {
+                System.out.println("ERROR!!!");
+                System.out.println("arr: " + Arrays.toString(randomArray));
+                System.out.println("val: " + randomVal);
+                System.out.println("ans1: " + ans1);
+                System.out.println("ans2: " + ans2);
+                isOk = false;
+            }
+        }
+        System.out.println("Test result: " + isOk);
     }
 
     // -------------------------------------------------------------------------
