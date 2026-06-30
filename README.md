@@ -1,2 +1,2 @@
 # learning-algs
-Solutions for different tasks
+My solutions for different algorithmic tasks
