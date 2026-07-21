@@ -25,7 +25,7 @@ public class RightSingleton {
     }
 
     private static class Singleton {
-        private static /*volatile*/ Singleton INSTANCE;
+        private static volatile Singleton INSTANCE;
 
         int x = 1;
         int y;

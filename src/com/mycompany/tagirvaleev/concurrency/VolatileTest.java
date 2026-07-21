@@ -15,6 +15,7 @@ public class VolatileTest {
                 foo.y = 1;
             });
             Thread t2 = new Thread(() -> {
+                System.out.println("Thread 2 is started");
                 while (foo.y != 1);
                 System.out.println(foo.x);
             });
