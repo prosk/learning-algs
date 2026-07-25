@@ -80,19 +80,20 @@ public class RotateImage {
     }
 
     // just shorter version of rotateSimple code without comments
+    // для меня наиболее четкая версия для понимания
     public void rotate(int[][] matrix) {
         int iterations = matrix.length / 2;
-        int begOffset = 0, side = matrix.length;
+        int begIdx = 0, side = matrix.length;
         for(int i = 0; i < iterations; i++) {
             for(int r = 0; r < side - 1; r++) {
-                int endOffset = begOffset + side - 1;
-                int tmp = matrix[begOffset][begOffset + r];
-                matrix[begOffset][begOffset + r] = matrix[endOffset - r][begOffset];
-                matrix[endOffset - r][begOffset] = matrix[endOffset][endOffset - r];
-                matrix[endOffset][endOffset - r] = matrix[begOffset + r][endOffset];
-                matrix[begOffset + r][endOffset] = tmp;
+                int endIdx = begIdx + side - 1;
+                int tmp = matrix[begIdx][begIdx + r];
+                matrix[begIdx][begIdx + r] = matrix[endIdx - r][begIdx];
+                matrix[endIdx - r][begIdx] = matrix[endIdx][endIdx - r];
+                matrix[endIdx][endIdx - r] = matrix[begIdx + r][endIdx];
+                matrix[begIdx + r][endIdx] = tmp;
             }
-            begOffset++;
+            begIdx++;
             side -= 2;
         }
     }
