@@ -51,17 +51,17 @@ public class Task2_EzraftAndArray {
             return;
         }
         // n >= 3 && n <= 50
-        long[] ans = new long[n];
+        long curr;
         long prevSum = 0L;
         for(int i = 0; i < n; i++) {
             if (i < 3) {
-                ans[i] = i + 1;
+                curr = i + 1;
             } else {
-                ans[i] = prevSum;
+                curr = prevSum;
             }
-            prevSum += ans[i];
+            prevSum += curr;
             // output
-            out.print(ans[i] + " ");
+            out.print(curr + " ");
         }
         out.println();
     }
