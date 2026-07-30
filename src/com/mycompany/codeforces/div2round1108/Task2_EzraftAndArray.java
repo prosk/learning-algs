@@ -44,26 +44,18 @@ public class Task2_EzraftAndArray {
         int n = readInt();
         if (n == 1) {
             out.println("1");
-            return;
-        }
-        if (n == 2) {
+        } else if (n == 2) {
             out.println("-1");
-            return;
-        }
-        // n >= 3 && n <= 50
-        long curr;
-        long prevSum = 0L;
-        for(int i = 0; i < n; i++) {
-            if (i < 3) {
-                curr = i + 1;
-            } else {
-                curr = prevSum;
+        } else {
+            // n >= 3 && n <= 50
+            out.print("1 2 3");
+            long curr = 6;
+            for (int i = 4; i <= n; i++) {
+                out.print(" " + curr);
+                curr *= 2;
             }
-            prevSum += curr;
-            // output
-            out.print(curr + " ");
+            out.println();
         }
-        out.println();
     }
 
     int readInt() {
